@@ -20,10 +20,10 @@ export const formSchema = z.object({
     .min(1, 'Nama karyawan wajib diisi')
     .max(100, 'Nama karyawan maksimal 100 karakter'),
   employee_department: z
-    .string('Departemen atau bagian wajib diisi')
+    .string('Departemen atau perusahaan wajib diisi')
     .trim()
-    .min(1, 'Departemen atau bagian wajib diisi')
-    .max(100, 'Departemen atau bagian maksimal 100 karakter'),
+    .min(1, 'Departemen atau perusahaan wajib diisi')
+    .max(100, 'Departemen atau perusahaan maksimal 100 karakter'),
   purpose: z
     .string('Tujuan kunjungan wajib diisi')
     .trim()
@@ -41,6 +41,11 @@ export const approveSchema = z.object({
 });
 
 const empty = (v) => (v === '' ? undefined : v);
+
+export const statsSchema = z.object({
+  from: z.preprocess(empty, isoDate.optional()),
+  to: z.preprocess(empty, isoDate.optional()),
+});
 
 export const filterSchema = z.object({
   q: z.preprocess(empty, z.string().trim().max(100).optional()),

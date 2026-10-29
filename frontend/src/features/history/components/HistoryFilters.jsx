@@ -9,8 +9,9 @@ import { useDebounced } from '@/components/SearchPicker'
 import { STATUS_OPTIONS } from '@/lib/status'
 import { api } from '@/lib/axios'
 import { normalizePhone } from '@/lib/phone'
-import { DateRangeFilter } from './DateRangeFilter'
 import { EntityFilter } from './EntityFilter'
+
+const LIST_FILTERS = { q: '', phone: '', status: '', company_id: '', company_name: '', employee: '' }
 
 /** Isian teks yang baru menerapkan filter setelah berhenti mengetik. */
 function DebouncedInput({ value, onCommit, ...props }) {
@@ -24,7 +25,8 @@ function DebouncedInput({ value, onCommit, ...props }) {
   return <Input value={text} onChange={(e) => setText(e.target.value)} {...props} />
 }
 
-export function HistoryFilters({ filters, update, reset, hasAny }) {
+/** Filter daftar kunjungan. Periode dipilih terpisah di bagian atas halaman. */
+export function HistoryFilters({ filters, update, hasListFilters }) {
   const [companyQuery, setCompanyQuery] = useState('')
   const companyTerm = useDebounced(companyQuery, 300)
   const companies = useQuery({
@@ -33,34 +35,21 @@ export function HistoryFilters({ filters, update, reset, hasAny }) {
   })
 
   return (
-    <div className="space-y-4 rounded-2xl border bg-card p-4 sm:p-5">
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-1.5">
+    <div className="space-y-4 border-b bg-muted/30 p-4 sm:p-5">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="space-y-1.5 sm:col-span-2 xl:col-span-1">
           <Label htmlFor="cari" className="font-semibold">
             Cari tamu
           </Label>
           <div className="relative">
             <LuSearch className="pointer-events-none absolute top-1/2 left-3.5 size-5 -translate-y-1/2 text-muted-foreground" />
-            <DebouncedInput
-              id="cari"
-              value={filters.q}
-              onCommit={(q) => update({ q })}
-              placeholder="Nama atau nomor telepon"
-              className="pl-11"
-            />
+            <DebouncedInput id="cari" value={filters.q} onCommit={(q) => update({ q })} placeholder="Nama atau nomor HP" className="bg-card pl-11" />
           </div>
         </div>
         <div className="space-y-1.5">
-          <Label className="font-semibold">Tanggal kunjungan</Label>
-          <DateRangeFilter from={filters.from} to={filters.to} onChange={({ from, to }) => update({ from, to })} />
-        </div>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="space-y-1.5">
           <Label className="font-semibold">Status</Label>
           <Select value={filters.status || 'semua'} onValueChange={(v) => update({ status: v === 'semua' ? '' : v })}>
-            <SelectTrigger className="h-11! w-full">
+            <SelectTrigger className="h-11! w-full bg-card">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -97,13 +86,13 @@ export function HistoryFilters({ filters, update, reset, hasAny }) {
               value={filters.employee}
               onCommit={(employee) => update({ employee: employee.trim() })}
               placeholder="Nama karyawan"
-              className="pl-10"
+              className="bg-card pl-10"
             />
           </div>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="phone-filter" className="font-semibold">
-            Nomor telepon tamu
+            Nomor HP tamu
           </Label>
           <div className="relative">
             <LuPhone className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -118,17 +107,17 @@ export function HistoryFilters({ filters, update, reset, hasAny }) {
                 if (!phone.trim() || normalized) update({ phone: normalized ?? '' })
               }}
               placeholder="Nomor lengkap"
-              className="pl-10"
+              className="bg-card pl-10"
             />
           </div>
         </div>
       </div>
 
-      {hasAny && (
+      {hasListFilters && (
         <div className="flex justify-end">
-          <Button variant="ghost" size="sm" onClick={reset}>
+          <Button variant="ghost" size="sm" onClick={() => update(LIST_FILTERS)}>
             <LuRotateCcw />
-            Hapus semua filter
+            Hapus filter daftar
           </Button>
         </div>
       )}

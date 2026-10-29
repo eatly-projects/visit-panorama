@@ -317,3 +317,31 @@ Teknologi mengikuti pola standar project Lutfi.
 - **Poster QR** (A4) untuk meja resepsionis tersedia dalam dua versi: `docs/poster/Poster-QR-Tamu-Panorama.pdf` dan `.png` (2382 × 3369 piksel). QR mengarah ke `https://visit-panorama.vercel.app/`.
   - Desain poster ada di `frontend/scripts/poster-qr/poster.html`.
   - Untuk membuat ulang (misalnya kalau domain berubah), jalankan dari folder `frontend/`: `npm run poster-qr`, atau `npm run poster-qr -- https://alamat-baru/`.
+
+## 21. Dashboard Riwayat, export, dan data dummy (permintaan Lutfi, 29 Oktober 2026)
+
+- Label form "Departemen atau bagian" diganti menjadi **"Departemen atau perusahaan"**.
+- **Riwayat kunjungan** sekarang berbentuk dashboard. **Periode bawaannya bulan ini** (tanggal 1 sampai hari ini) dan bisa diganti di pojok kanan atas, termasuk pilihan "Semua tanggal". Periode itu berlaku untuk angka, grafik, daftar, dan file unduhan.
+  - **Kartu angka.** Semuanya dihitung dari form yang dikirim di dalam periode, kecuali "Sedang berkunjung" yang selalu menunjukkan keadaan saat ini:
+    - Tamu mengisi form
+    - Tamu hadir (sudah disetujui)
+    - Sedang berkunjung
+    - Sudah pulang
+    - Menunggu persetujuan
+    - Ditolak
+    - Kartu tidak kembali
+    - Rata-rata lama berkunjung, dihitung dari tamu yang sudah pulang
+  - **Grafik:**
+    - Tamu hadir per hari. Kalau periode lebih dari 62 hari, otomatis ditampilkan per bulan.
+    - Jam kedatangan.
+    - Lima perusahaan atau asal terbanyak.
+    - Lima karyawan yang paling sering dikunjungi. Nama yang hanya beda huruf besar/kecil digabung.
+  - **Daftar kunjungan** dan filternya ada di bawah dashboard.
+- **Export Excel dan PDF** (tombol "Unduh Excel" dan "Unduh PDF") mengikuti periode dan semua filter daftar, maksimal 10.000 kunjungan per file.
+  - **Excel** punya dua sheet:
+    - **Ringkasan:** angka, kunjungan per hari, dan peringkat.
+    - **Daftar kunjungan:** tanggal dalam format Indonesia, nomor HP sebagai teks, judul kolom membeku di atas, dan ada saringan di tiap kolom.
+  - **PDF** berukuran A4 mendatar:
+    - **Halaman 1:** ringkasan, grafik per hari, dan peringkat.
+    - **Halaman berikutnya:** daftar lengkap dengan nomor halaman.
+- **Data dummy bulan ini:** `npm run dummy -- isi` atau `npm run dummy -- hapus` dari folder `backend/`. Penandanya nomor HP berawalan `0899000`, jadi data asli tidak pernah tersentuh.

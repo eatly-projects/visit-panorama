@@ -44,6 +44,7 @@
   --color-brand-red: var(--brand-red);
   --color-brand-ink: var(--brand-ink);
   --color-brand-soft: var(--brand-soft);
+  --color-chart-1: var(--chart-1);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -66,6 +67,8 @@
   --brand-red: #ed1c24;
   --brand-ink: #b9520f;
   --brand-soft: #fff4ea;
+  /* Warna grafik: lolos validator dataviz di mode terang dan gelap. */
+  --chart-1: #e2701c;
 
   --background: #ffffff;
   --foreground: #1c1917;
@@ -102,6 +105,7 @@
   --brand-red: #f2444b;
   --brand-ink: #f7a766;
   --brand-soft: #2a2018;
+  --chart-1: #e2701c;
 
   --background: #151517;
   --foreground: #f4f4f5;

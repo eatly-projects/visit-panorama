@@ -1,10 +1,15 @@
 import * as service from './visits.service.js';
-import { approveSchema, filterSchema } from './visits.schema.js';
+import * as statsService from './visits.stats.js';
+import { approveSchema, filterSchema, statsSchema } from './visits.schema.js';
 import { parse } from '../../shared/middleware/errorHandler.js';
 import { idParam, pageQuery } from '../../shared/utils/schemas.js';
 
 export async function summary(req, res) {
   res.json(await service.summary());
+}
+
+export async function stats(req, res) {
+  res.json(await statsService.stats(parse(statsSchema, req.query)));
 }
 
 const queryText = (req) => (typeof req.query.q === 'string' ? req.query.q.slice(0, 100) : '');
@@ -20,6 +25,10 @@ export async function active(req, res) {
 export async function list(req, res) {
   const filters = parse(filterSchema, req.query);
   res.json(await service.list(filters, pageQuery.parse(req.query.page)));
+}
+
+export async function exportRows(req, res) {
+  res.json(await service.exportRows(parse(filterSchema, req.query)));
 }
 
 export async function detail(req, res) {

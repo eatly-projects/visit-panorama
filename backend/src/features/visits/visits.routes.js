@@ -6,6 +6,8 @@ export const visitsRouter = Router();
 
 // Path tetap harus didaftarkan sebelum '/:id'.
 visitsRouter.get('/summary', asyncHandler(c.summary));
+visitsRouter.get('/stats', asyncHandler(c.stats));
+visitsRouter.get('/export', asyncHandler(c.exportRows));
 visitsRouter.get('/pending', asyncHandler(c.pending));
 visitsRouter.get('/active', asyncHandler(c.active));
 visitsRouter.get('/delete-preview', asyncHandler(c.deletePreview));

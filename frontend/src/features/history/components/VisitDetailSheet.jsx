@@ -93,7 +93,7 @@ export function VisitDetailSheet({ id, onOpenChange, onFilterPhone }) {
               <Info label="Perusahaan atau asal">{v.company_name ?? 'Tidak diisi'}</Info>
               <Info label="Orang yang ditemui">
                 {v.employee_name}
-                {v.employee_department && <span className="text-muted-foreground"> (Departemen {v.employee_department})</span>}
+                {v.employee_department && <span className="text-muted-foreground"> ({v.employee_department})</span>}
               </Info>
               <div className="sm:col-span-2">
                 <Info label="Tujuan kunjungan">{v.purpose ?? <span className="text-muted-foreground">Tidak diisi</span>}</Info>

@@ -14,6 +14,8 @@ export const visitsApi = {
   remove: (id) => api.delete(`/visits/${id}`),
   deletePreview: (params) => api.get('/visits/delete-preview', { params }).then((r) => r.data),
   deleteByFilter: (filters) => api.post('/visits/delete-by-filter', filters).then((r) => r.data),
+  stats: (params) => api.get('/visits/stats', { params }).then((r) => r.data),
+  exportRows: (params) => api.get('/visits/export', { params, timeout: 60_000 }).then((r) => r.data),
 }
 
 // Daftar di beranda diperbarui otomatis tanpa refresh (docs/PLANNING.md §6.1).

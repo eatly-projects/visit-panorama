@@ -54,6 +54,15 @@ export function formatDuration(start, end) {
   return parts.join(' ')
 }
 
+/** 81 (menit) → "1 jam 21 menit". null kalau belum ada data. */
+export function formatMinutes(minutes) {
+  if (minutes == null) return null
+  if (minutes < 1) return 'kurang dari 1 menit'
+  const h = Math.floor(minutes / 60)
+  const m = Math.round(minutes % 60)
+  return [h && `${h} jam`, m && `${m} menit`].filter(Boolean).join(' ')
+}
+
 /** "Selamat pagi" / "Selamat siang" / "Selamat sore" / "Selamat malam" menurut jam WIB. */
 export function greeting() {
   const hour = Number(hourFmt.format(new Date()))

@@ -45,6 +45,12 @@
 - Nama karyawan dan departemen sekarang diketik bebas oleh tamu, dan menu Karyawan disembunyikan (migrasi `0003`).
 - Tombol kirim nonaktif sampai semua kolom wajib terisi. Sudah dicek di browser: tombol nonaktif saat form kosong dan aktif setelah semua lengkap.
 - Poster QR dibuat dalam versi PDF dan PNG di `docs/poster/`.
+- Label "Departemen atau perusahaan".
+- Riwayat berubah jadi dashboard (periode bawaan bulan ini, kartu angka, dan grafik), plus export Excel dan PDF.
+  - Sudah dicek di browser: dashboard tampil rapi di desktop dan HP; file Excel diperiksa isinya (sheet, format tanggal, nomor HP, judul kolom membeku); halaman PDF dilihat sebagai gambar.
+  - Belum dicek: membuka file hasil unduhan di Microsoft Excel sungguhan.
+- Data dummy bulan ini sudah diisi: 274 kunjungan bernomor HP `0899000…`. Hapus dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
+- Catatan `npm audit`: ada celah tingkat sedang di pustaka `uuid` milik exceljs. Tidak berdampak di sini, karena exceljs hanya menyusun file di browser dari data aplikasi sendiri.
 
 ### Langkah berikutnya
 - Lutfi mencoba di lokal dan meneruskan masukan atasan.

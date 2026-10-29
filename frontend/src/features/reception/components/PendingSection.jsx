@@ -76,7 +76,7 @@ export function PendingSection({ now }) {
                     <LuUserRound className="size-4 shrink-0 text-muted-foreground" />
                     <span>
                       Ingin bertemu <span className="font-semibold">{v.employee_name}</span>
-                      {v.employee_department && <span className="text-muted-foreground"> (Departemen {v.employee_department})</span>}
+                      {v.employee_department && <span className="text-muted-foreground"> ({v.employee_department})</span>}
                     </span>
                   </p>
                   {v.purpose && (

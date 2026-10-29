@@ -194,6 +194,20 @@ export async function list(filters, page) {
   return paginate(where.length ? where.join(' and ') : 'true', params, 'v.submitted_at desc', page, PAGE_SIZE);
 }
 
+// Batas baris export supaya file tetap ringan dan fungsi Vercel tidak kehabisan waktu.
+const EXPORT_LIMIT = 10000;
+
+/** Semua kunjungan sesuai filter (urut dari yang paling lama), untuk Excel dan PDF. */
+export async function exportRows(filters) {
+  const { where, params } = buildWhere(filters);
+  const clause = where.length ? `where ${where.join(' and ')}` : '';
+  const { rows } = await pool.query(
+    `${VISIT_SELECT} ${clause} order by v.submitted_at asc limit ${EXPORT_LIMIT + 1}`,
+    params
+  );
+  return { rows: rows.slice(0, EXPORT_LIMIT), truncated: rows.length > EXPORT_LIMIT, limit: EXPORT_LIMIT };
+}
+
 function deletionWhere(filters) {
   if (!filters.from && !filters.to && !filters.phone && !filters.employee) {
     throw new HttpError(400, 'Pilih minimal rentang tanggal, tamu tertentu, atau orang yang ditemui sebelum menghapus');

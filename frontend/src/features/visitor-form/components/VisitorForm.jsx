@@ -35,7 +35,7 @@ function validate(f) {
   else if (!normalizePhone(f.phone)) errors.phone = 'Nomor HP tidak valid. Contoh: 0812 3456 7890'
   if (!f.company) errors.company = 'Pilih atau tambahkan perusahaan atau asal Anda'
   if (!f.employee_name.trim()) errors.employee_name = 'Nama karyawan wajib diisi'
-  if (!f.employee_department.trim()) errors.employee_department = 'Departemen atau bagian wajib diisi'
+  if (!f.employee_department.trim()) errors.employee_department = 'Departemen atau perusahaan wajib diisi'
   if (!f.purpose.trim()) errors.purpose = 'Tujuan kunjungan wajib diisi'
   if (!f.consent) errors.consent = 'Centang persetujuan terlebih dahulu'
   return errors
@@ -52,7 +52,7 @@ function missingItems(f) {
   else if (!normalizePhone(f.phone)) items.push('nomor HP yang benar')
   if (!f.company) items.push('perusahaan atau asal')
   if (!f.employee_name.trim()) items.push('nama karyawan')
-  if (!f.employee_department.trim()) items.push('departemen atau bagian')
+  if (!f.employee_department.trim()) items.push('departemen atau perusahaan')
   if (!f.purpose.trim()) items.push('tujuan kunjungan')
   if (!f.consent) items.push('centang persetujuan')
   return items
@@ -173,7 +173,7 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
               placeholder="Contoh: Budi Hartono"
             />
           </Field>
-          <Field id="employee_department" label="Departemen atau bagian" error={errors.employee_department}>
+          <Field id="employee_department" label="Departemen atau perusahaan" error={errors.employee_department}>
             <Input
               id="employee_department"
               maxLength={100}
