@@ -1,0 +1,173 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/plus-jakarta-sans";
+
+/*
+ * Token warna Panorama Head Office.
+ *
+ * Diambil dari logo: oranye "Panorama" (#F0852F) dan merah burung (#ED1C24).
+ * Latar putih bersih; oranye dipakai untuk tombol utama dan aksen, merah
+ * untuk tindakan berbahaya dan status "Kartu tidak kembali".
+ *
+ * Tombol utama memakai oranye yang sedikit lebih pekat (#E2701C) supaya
+ * tulisan putih di atasnya lebih mudah dibaca; warna logo asli tetap dipakai
+ * sebagai --brand untuk aksen dekoratif.
+ *
+ * Mode gelap: abu arang netral, oranye dicerahkan dengan tulisan gelap di
+ * atasnya.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-brand-red: var(--brand-red);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  --brand: #f0852f;
+  --brand-red: #ed1c24;
+  --brand-ink: #b9520f;
+  --brand-soft: #fff4ea;
+
+  --background: #ffffff;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --popover: #ffffff;
+  --popover-foreground: #1c1917;
+  --primary: #e2701c;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #1c1917;
+  --muted: #f5f5f4;
+  --muted-foreground: #6b6560;
+  --accent: #fff4ea;
+  --accent-foreground: #9a3f0a;
+  --destructive: #d91b22;
+  --destructive-foreground: #ffffff;
+  --border: #e9e5e1;
+  --input: #ddd7d1;
+  --ring: #f0852f;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1c1917;
+  --sidebar-primary: #e2701c;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #fff4ea;
+  --sidebar-accent-foreground: #9a3f0a;
+  --sidebar-border: #e9e5e1;
+  --sidebar-ring: #f0852f;
+}
+
+.dark {
+  --brand: #f39448;
+  --brand-red: #f2444b;
+  --brand-ink: #f7a766;
+  --brand-soft: #2a2018;
+
+  --background: #151517;
+  --foreground: #f4f4f5;
+  --card: #1c1c1f;
+  --card-foreground: #f4f4f5;
+  --popover: #1f1f23;
+  --popover-foreground: #f4f4f5;
+  --primary: #f28a3a;
+  --primary-foreground: #1d1207;
+  --secondary: #26262a;
+  --secondary-foreground: #f4f4f5;
+  --muted: #26262a;
+  --muted-foreground: #a8a8b0;
+  --accent: #2a2018;
+  --accent-foreground: #f7a766;
+  --destructive: #f04a50;
+  --destructive-foreground: #ffffff;
+  --border: #2d2d32;
+  --input: #3a3a40;
+  --ring: #f39448;
+
+  --sidebar: #19191c;
+  --sidebar-foreground: #f4f4f5;
+  --sidebar-primary: #f28a3a;
+  --sidebar-primary-foreground: #1d1207;
+  --sidebar-accent: #2a2018;
+  --sidebar-accent-foreground: #f7a766;
+  --sidebar-border: #2d2d32;
+  --sidebar-ring: #f39448;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: 'tnum' 0;
+  }
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

@@ -1,0 +1,19 @@
+# Kredensial
+.env
+.env.*
+!.env.example
+
+# Dependensi dan hasil build
+node_modules/
+dist/
+.vercel/
+
+# Bahan mentah dari Lutfi di folder utama (logo asli, tangkapan layar arahan
+# atasan). Logo yang dipakai aplikasi ada di frontend/public.
+/*.png
+/*.jpg
+/*.jpeg
+
+# Lain-lain
+*.log
+.DS_Store
