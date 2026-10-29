@@ -310,3 +310,10 @@ Teknologi mengikuti pola standar project Lutfi.
 - **Menu Karyawan disembunyikan**, tidak dihapus. Halamannya dan datanya tetap ada, dan bisa dimunculkan lagi dengan menghapus tanda `hidden` di `frontend/src/layouts/DashboardLayout.jsx`.
 - Pencarian karyawan publik (`GET /api/public/employees`) dicabut, karena form tidak memakainya lagi. Dengan begitu daftar karyawan tidak terbuka untuk umum.
 - Filter "Orang yang ditemui" di Riwayat menjadi kotak ketik yang mencari nama karyawan yang **mengandung** kata tersebut. Hapus sesuai filter memakai aturan yang sama, dan jumlah datanya selalu ditampilkan dulu sebelum dihapus.
+
+## 20. Tombol kirim dan poster QR (permintaan Lutfi, 29 Oktober 2026)
+
+- **Tombol "Kirim data kunjungan" nonaktif** selama masih ada kolom wajib yang kosong, nomor HP belum benar, atau persetujuan belum dicentang. Di bawah tombol tertulis apa saja yang belum diisi. Nomor HP yang salah langsung ditandai saat tamu pindah kolom.
+- **Poster QR** (A4) untuk meja resepsionis tersedia dalam dua versi: `docs/poster/Poster-QR-Tamu-Panorama.pdf` dan `.png` (2382 × 3369 piksel). QR mengarah ke `https://visit-panorama.vercel.app/`.
+  - Desain poster ada di `frontend/scripts/poster-qr/poster.html`.
+  - Untuk membuat ulang (misalnya kalau domain berubah), jalankan dari folder `frontend/`: `npm run poster-qr`, atau `npm run poster-qr -- https://alamat-baru/`.

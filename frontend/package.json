@@ -7,7 +7,8 @@
                     "dev":  "vite",
                     "build":  "vite build",
                     "lint":  "oxlint",
-                    "preview":  "vite preview"
+                    "preview":  "vite preview",
+                    "poster-qr":  "node scripts/poster-qr/build.mjs"
                 },
     "dependencies":  {
                          "@fontsource-variable/plus-jakarta-sans":  "^5.3.0",

@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Poster QR Tamu Panorama Head Office</title>
+    <style>
+      @font-face {
+        font-family: 'Jakarta';
+        src: url('{{FONT}}') format('woff2');
+        font-weight: 200 800;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: 'Jakarta';
+        src: url('{{FONT_ITALIC}}') format('woff2');
+        font-weight: 200 800;
+        font-style: italic;
+      }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 210mm;
+        height: 297mm;
+      }
+      body {
+        font-family: 'Jakarta', sans-serif;
+        color: #1c1917;
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .page {
+        position: relative;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+
+      /* Bagian atas: oranye logo dengan cahaya lembut di kanan atas */
+      .hero {
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 146mm;
+        padding: 17mm 18mm 0;
+        color: #fff;
+        background:
+          radial-gradient(110% 85% at 90% 0%, rgba(255, 196, 140, 0.75) 0%, rgba(255, 196, 140, 0) 60%),
+          linear-gradient(160deg, #f39448 0%, #f0852f 42%, #e0681a 100%);
+      }
+      .swoosh {
+        position: absolute;
+        right: -46mm;
+        top: -4mm;
+        width: 180mm;
+        opacity: 0.2;
+      }
+      .logo {
+        position: relative;
+        height: 10mm;
+        display: block;
+      }
+      h1 {
+        position: relative;
+        margin-top: 15mm;
+        max-width: 160mm;
+        font-size: 41pt;
+        line-height: 1.04;
+        font-weight: 800;
+        letter-spacing: -0.025em;
+      }
+      .lead {
+        position: relative;
+        margin-top: 6mm;
+        max-width: 135mm;
+        font-size: 14pt;
+        line-height: 1.45;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.94);
+      }
+
+      /* Kartu QR yang menjorok dari bagian oranye ke bagian putih */
+      .card {
+        position: absolute;
+        left: 50%;
+        top: 110mm;
+        transform: translateX(-50%);
+        width: 100mm;
+        padding: 8mm 8mm 7mm;
+        border-radius: 9mm;
+        background: #fff;
+        text-align: center;
+        box-shadow:
+          0 7mm 18mm -7mm rgba(150, 60, 0, 0.45),
+          0 0 0 0.35mm rgba(28, 25, 23, 0.06);
+      }
+      .qr {
+        position: relative;
+        width: 76mm;
+        height: 76mm;
+        margin: 0 auto;
+        padding: 6mm;
+      }
+      .qr svg {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      /* Sudut bidikan kamera */
+      .corner {
+        position: absolute;
+        width: 12mm;
+        height: 12mm;
+        border: 1.5mm solid #f0852f;
+      }
+      .tl { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: 4mm; }
+      .tr { top: 0; right: 0; border-left: 0; border-bottom: 0; border-top-right-radius: 4mm; border-color: #ed1c24; }
+      .bl { bottom: 0; left: 0; border-right: 0; border-top: 0; border-bottom-left-radius: 4mm; border-color: #ed1c24; }
+      .br { bottom: 0; right: 0; border-left: 0; border-top: 0; border-bottom-right-radius: 4mm; }
+      .scan {
+        margin-top: 4.5mm;
+        font-size: 15pt;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+      }
+      .url {
+        margin-top: 1mm;
+        font-size: 10.5pt;
+        font-weight: 600;
+        color: #8a5a36;
+      }
+
+      /* Langkah mendaftar */
+      .steps {
+        position: absolute;
+        left: 18mm;
+        right: 18mm;
+        top: 219mm;
+      }
+      .steps h2 {
+        font-size: 13pt;
+        font-weight: 800;
+        margin-bottom: 4.5mm;
+      }
+      .steps ol {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6mm;
+      }
+      .steps li {
+        display: flex;
+        gap: 3mm;
+        align-items: flex-start;
+      }
+      .num {
+        flex: none;
+        width: 10mm;
+        height: 10mm;
+        border-radius: 3mm;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #fff4ea;
+        border: 0.35mm solid rgba(240, 133, 47, 0.45);
+        color: #b9520f;
+        font-size: 15pt;
+        font-weight: 800;
+        font-style: italic;
+      }
+      .steps p {
+        font-size: 10.5pt;
+        line-height: 1.38;
+        font-weight: 500;
+        color: #3d3733;
+      }
+      .steps strong {
+        color: #1c1917;
+        font-weight: 700;
+      }
+
+      /* Catatan identitas */
+      .note {
+        position: absolute;
+        left: 18mm;
+        right: 18mm;
+        top: 260mm;
+        display: flex;
+        gap: 3.5mm;
+        align-items: center;
+        padding: 3.5mm 5mm;
+        border-radius: 4mm;
+        background: #fff4ea;
+      }
+      .note svg {
+        flex: none;
+        width: 7mm;
+        height: 7mm;
+      }
+      .note p {
+        font-size: 10pt;
+        line-height: 1.4;
+        font-weight: 500;
+        color: #3d3733;
+      }
+      .note strong {
+        color: #1c1917;
+        font-weight: 700;
+      }
+
+      .footer {
+        position: absolute;
+        left: 18mm;
+        right: 18mm;
+        bottom: 9mm;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 9.5pt;
+        font-weight: 600;
+        color: #6b6560;
+      }
+      .footer img {
+        height: 5.5mm;
+      }
+      .bar {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 3.2mm;
+        background: linear-gradient(90deg, #f0852f 0%, #ed1c24 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <svg class="swoosh" viewBox="0 0 640 360" fill="none" aria-hidden="true">
+          <path d="M40 18c120 26 248 92 330 230 4 7 15 6 16-2C350 120 200 40 46 6c-9-2-14 10-6 12Z" fill="#fff" />
+          <path d="M402 118c34 46 76 84 122 88 30 2 52-14 66-32 3-4-2-9-6-6-26 22-62 28-98 6-26-16-48-40-66-66-6-8-23 1-18 10Z" fill="#fff" />
+          <path d="M390 312c84-48 168-74 248-60 6 1 9-8 3-11-88-36-188-14-262 58-6 6 3 17 11 13Z" fill="#fff" />
+        </svg>
+        <img class="logo" src="{{LOGO_PUTIH}}" alt="Panorama" />
+        <h1>Selamat datang di Panorama Head Office</h1>
+        <p class="lead">Isi data kunjungan lewat HP Anda. Tidak perlu menyerahkan kartu identitas.</p>
+      </section>
+
+      <div class="card">
+        <div class="qr">
+          <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+          {{QR_SVG}}
+        </div>
+        <p class="scan">Scan dengan kamera HP</p>
+        <p class="url">{{URL_TEXT}}</p>
+      </div>
+
+      <section class="steps">
+        <h2>Cara mendaftar</h2>
+        <ol>
+          <li>
+            <span class="num">1</span>
+            <p><strong>Scan kode QR</strong> di atas dengan kamera HP Anda.</p>
+          </li>
+          <li>
+            <span class="num">2</span>
+            <p><strong>Isi data kunjungan</strong>, lalu tekan tombol Kirim data kunjungan.</p>
+          </li>
+          <li>
+            <span class="num">3</span>
+            <p><strong>Tunjukkan layar HP</strong> ke resepsionis untuk mendapatkan kartu visitor.</p>
+          </li>
+        </ol>
+      </section>
+
+      <div class="note">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#e0681a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+        <p>
+          <strong>Kartu identitas Anda tidak kami minta, simpan, atau tahan.</strong>
+          Mohon kembalikan kartu visitor ke resepsionis sebelum meninggalkan gedung.
+        </p>
+      </div>
+
+      <div class="footer">
+        <img src="{{LOGO_WARNA}}" alt="Panorama" />
+        <span>Butuh bantuan? Silakan tanyakan ke resepsionis.</span>
+      </div>
+      <div class="bar"></div>
+    </div>
+  </body>
+</html>

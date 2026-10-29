@@ -42,6 +42,23 @@ function validate(f) {
 }
 
 /**
+ * Daftar yang belum lengkap, ditampilkan di bawah tombol kirim. Tombol baru
+ * aktif setelah daftar ini kosong (permintaan Lutfi, 29 Oktober 2026).
+ */
+function missingItems(f) {
+  const items = []
+  if (!f.visitor_name.trim()) items.push('nama lengkap')
+  if (!f.phone.trim()) items.push('nomor HP')
+  else if (!normalizePhone(f.phone)) items.push('nomor HP yang benar')
+  if (!f.company) items.push('perusahaan atau asal')
+  if (!f.employee_name.trim()) items.push('nama karyawan')
+  if (!f.employee_department.trim()) items.push('departemen atau bagian')
+  if (!f.purpose.trim()) items.push('tujuan kunjungan')
+  if (!f.consent) items.push('centang persetujuan')
+  return items
+}
+
+/**
  * Form data kunjungan. Dipakai tamu (lewat QR) dan petugas (untuk tamu
  * yang tidak membawa HP; mode="petugas").
  */
@@ -49,6 +66,7 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const formRef = useRef(null)
+  const missing = missingItems(form)
 
   const set = (key) => (value) => {
     setForm((f) => ({ ...f, [key]: value }))
@@ -73,7 +91,10 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
     const first = ORDER.find((k) => found[k])
     if (first) {
       toast.error('Masih ada data yang perlu dilengkapi')
-      formRef.current?.querySelector(`#${first}`)?.focus()
+      // Kolom perusahaan memakai komponen pencarian yang id-nya ada di wadah,
+      // jadi fokuskan isian di dalamnya.
+      const target = formRef.current?.querySelector(`#${first}`)
+      ;(target?.matches('input, textarea, button') ? target : target?.querySelector('input'))?.focus()
       return
     }
     submit.mutate({
@@ -116,6 +137,13 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
             maxLength={20}
             value={form.phone}
             onChange={(e) => set('phone')(e.target.value)}
+            // Nomor yang salah langsung diberi tahu saat tamu pindah kolom,
+            // karena tombol kirim tetap nonaktif selama nomornya salah.
+            onBlur={() => {
+              if (form.phone.trim() && !normalizePhone(form.phone)) {
+                setErrors((e) => ({ ...e, phone: 'Nomor HP tidak valid. Contoh: 0812 3456 7890' }))
+              }
+            }}
             aria-invalid={!!errors.phone || undefined}
             placeholder="0812 3456 7890"
           />
@@ -130,7 +158,9 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
           error={errors.company}
           hint="Tulis nama perusahaan atau instansi Anda. Kalau datang atas nama pribadi, tulis asal Anda, misalnya nama kota."
         >
-          <CompanyField id="company" value={form.company} onChange={set('company')} invalid={!!errors.company} />
+          <div id="company">
+            <CompanyField value={form.company} onChange={set('company')} invalid={!!errors.company} />
+          </div>
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id="employee_name" label="Nama karyawan yang ingin ditemui" error={errors.employee_name}>
@@ -210,10 +240,23 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
         )}
       </div>
 
-      <Button type="submit" size="lg" className="h-14 w-full text-[17px]" disabled={submit.isPending}>
-        <LuSend />
-        {submit.isPending ? 'Mengirim…' : 'Kirim data kunjungan'}
-      </Button>
+      <div className="space-y-3">
+        <Button
+          type="submit"
+          size="lg"
+          className="h-14 w-full text-[17px] disabled:opacity-40"
+          disabled={submit.isPending || missing.length > 0}
+          aria-describedby={missing.length ? 'belum-lengkap' : undefined}
+        >
+          <LuSend />
+          {submit.isPending ? 'Mengirim…' : 'Kirim data kunjungan'}
+        </Button>
+        {missing.length > 0 && (
+          <p id="belum-lengkap" className="text-center text-sm leading-relaxed text-muted-foreground" aria-live="polite">
+            Tombol aktif setelah semua terisi. Yang belum: <span className="font-semibold text-foreground">{missing.join(', ')}</span>.
+          </p>
+        )}
+      </div>
     </form>
   )
 }
