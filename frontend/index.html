@@ -8,11 +8,11 @@
     <title>Tamu Panorama Head Office</title>
     <script>
       // Pasang mode gelap/terang sebelum halaman tampil supaya tidak berkedip.
+      // Bawaannya mode terang (permintaan Lutfi); mode gelap hanya kalau
+      // pengguna pernah memilihnya lewat tombol.
       (function () {
         try {
-          var saved = localStorage.getItem('tema');
-          var dark = saved ? saved === 'gelap' : window.matchMedia('(prefers-color-scheme: dark)').matches;
-          if (dark) document.documentElement.classList.add('dark');
+          if (localStorage.getItem('tema') === 'gelap') document.documentElement.classList.add('dark');
         } catch (e) {}
       })();
     </script>
