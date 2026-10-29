@@ -16,7 +16,7 @@ const ACTIVE_STATUSES = ['menunggu', 'berkunjung'];
 
 const VISIT_SELECT = `
   select v.id, v.visitor_name, v.phone, v.company_id, c.name as company_name,
-         v.employee_id, e.name as employee_name, e.department as employee_department,
+         v.employee_name, v.employee_department,
          v.purpose, v.status, v.card_number, v.consent_at, v.submitted_at,
          v.approved_at, oa.name as approved_by_name,
          v.returned_at, ort.name as returned_by_name,
@@ -24,7 +24,6 @@ const VISIT_SELECT = `
          v.card_lost_at, ol.name as card_lost_by_name,
          ofl.name as filled_by_name
   from visits v
-  join employees e on e.id = v.employee_id
   left join companies c on c.id = v.company_id
   left join officers oa on oa.id = v.approved_by
   left join officers ort on ort.id = v.returned_by
@@ -33,19 +32,14 @@ const VISIT_SELECT = `
   left join officers ofl on ofl.id = v.filled_by`;
 
 export async function createFromForm(data, filledBy) {
-  const { rows: [employee] } = await pool.query('select 1 from employees where id = $1 and is_active', [
-    data.employee_id,
-  ]);
-  if (!employee) throw new HttpError(400, 'Orang yang ingin ditemui tidak ditemukan. Silakan pilih ulang.');
-
   const { rowCount } = await pool.query('select 1 from companies where id = $1', [data.company_id]);
   if (!rowCount) throw new HttpError(400, 'Perusahaan atau asal tidak ditemukan. Silakan pilih ulang.');
 
   const { rows } = await pool.query(
-    `insert into visits (visitor_name, phone, company_id, employee_id, purpose, consent_at, filled_by)
-     values ($1, $2, $3, $4, $5, now(), $6)
+    `insert into visits (visitor_name, phone, company_id, employee_name, employee_department, purpose, consent_at, filled_by)
+     values ($1, $2, $3, $4, $5, $6, now(), $7)
      returning visitor_name, submitted_at`,
-    [data.visitor_name, data.phone, data.company_id, data.employee_id, data.purpose, filledBy]
+    [data.visitor_name, data.phone, data.company_id, data.employee_name, data.employee_department, data.purpose, filledBy]
   );
   return rows[0];
 }
@@ -189,7 +183,8 @@ function buildWhere(f, { includeSearch = true } = {}) {
   if (f.to) add(`v.submitted_at < ((?::date + 1)::timestamp at time zone '${TZ}')`, f.to);
   if (f.status) add('v.status = ?', f.status);
   if (f.company_id) add('v.company_id = ?', f.company_id);
-  if (f.employee_id) add('v.employee_id = ?', f.employee_id);
+  // Nama karyawan diketik bebas oleh tamu, jadi dicari yang mengandung kata ini.
+  if (f.employee) add('v.employee_name ilike ?', likePattern(f.employee));
 
   return { where, params };
 }
@@ -200,7 +195,7 @@ export async function list(filters, page) {
 }
 
 function deletionWhere(filters) {
-  if (!filters.from && !filters.to && !filters.phone && !filters.employee_id) {
+  if (!filters.from && !filters.to && !filters.phone && !filters.employee) {
     throw new HttpError(400, 'Pilih minimal rentang tanggal, tamu tertentu, atau orang yang ditemui sebelum menghapus');
   }
   const { where, params } = buildWhere(filters, { includeSearch: false });

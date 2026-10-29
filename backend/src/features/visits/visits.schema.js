@@ -13,7 +13,17 @@ export const formSchema = z.object({
   // Arahan atasan (29 Oktober 2026): perusahaan/asal dan tujuan kunjungan
   // wajib; alamat tidak diminta karena termasuk data pribadi.
   company_id: z.uuid('Pilih atau tambahkan perusahaan atau asal Anda'),
-  employee_id: z.uuid('Pilih orang yang ingin ditemui'),
+  // Diketik bebas oleh tamu (permintaan Lutfi, 29 Oktober 2026).
+  employee_name: z
+    .string('Nama karyawan wajib diisi')
+    .trim()
+    .min(1, 'Nama karyawan wajib diisi')
+    .max(100, 'Nama karyawan maksimal 100 karakter'),
+  employee_department: z
+    .string('Departemen atau bagian wajib diisi')
+    .trim()
+    .min(1, 'Departemen atau bagian wajib diisi')
+    .max(100, 'Departemen atau bagian maksimal 100 karakter'),
   purpose: z
     .string('Tujuan kunjungan wajib diisi')
     .trim()
@@ -42,5 +52,5 @@ export const filterSchema = z.object({
   to: z.preprocess(empty, isoDate.optional()),
   status: z.preprocess(empty, z.enum(STATUSES, 'Status tidak dikenal').optional()),
   company_id: z.preprocess(empty, z.uuid('Perusahaan tidak ditemukan').optional()),
-  employee_id: z.preprocess(empty, z.uuid('Karyawan tidak ditemukan').optional()),
+  employee: z.preprocess(empty, z.string().trim().max(100).optional()),
 });

@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom'
 
 // Filter riwayat disimpan di alamat halaman, jadi tetap ada saat halaman
 // dimuat ulang dan bisa dibagikan ke petugas lain.
-const KEYS = ['q', 'phone', 'from', 'to', 'status', 'company_id', 'company_name', 'employee_id', 'employee_name']
+const KEYS = ['q', 'phone', 'from', 'to', 'status', 'company_id', 'company_name', 'employee']
 
 export function useHistoryFilters() {
   const [params, setParams] = useSearchParams()
@@ -31,12 +31,12 @@ export function useHistoryFilters() {
     to: filters.to,
     status: filters.status,
     company_id: filters.company_id,
-    employee_id: filters.employee_id,
+    employee: filters.employee,
   }
 
   const hasAny = Object.values(apiParams).some(Boolean)
   // Hapus sesuai filter wajib memakai salah satu dari ini (docs/PLANNING.md §6.2).
-  const canDelete = Boolean(filters.from || filters.to || filters.phone || filters.employee_id)
+  const canDelete = Boolean(filters.from || filters.to || filters.phone || filters.employee)
 
   return { filters, apiParams, page, update, reset, hasAny, canDelete, setPage: (p) => update({ page: String(p) }, { keepPage: true }) }
 }

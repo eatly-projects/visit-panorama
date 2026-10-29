@@ -11,13 +11,20 @@ import { normalizePhone } from '@/lib/phone'
 import { cn } from '@/lib/utils'
 import { publicApi } from '../api/publicApi'
 import { CompanyField } from './CompanyField'
-import { EmployeeField } from './EmployeeField'
 
 const PURPOSE_MAX = 1000
-const EMPTY = { visitor_name: '', phone: '', purpose: '', company: null, employee: null, consent: false }
+const EMPTY = {
+  visitor_name: '',
+  phone: '',
+  purpose: '',
+  company: null,
+  employee_name: '',
+  employee_department: '',
+  consent: false,
+}
 
 // Urutan kolom di layar, untuk memfokuskan kolom pertama yang salah.
-const ORDER = ['visitor_name', 'phone', 'company', 'employee', 'purpose', 'consent']
+const ORDER = ['visitor_name', 'phone', 'company', 'employee_name', 'employee_department', 'purpose', 'consent']
 
 // Kolom sesuai arahan atasan (29 Oktober 2026): semua wajib; alamat tidak
 // diminta karena termasuk data pribadi.
@@ -27,7 +34,8 @@ function validate(f) {
   if (!f.phone.trim()) errors.phone = 'Nomor HP wajib diisi'
   else if (!normalizePhone(f.phone)) errors.phone = 'Nomor HP tidak valid. Contoh: 0812 3456 7890'
   if (!f.company) errors.company = 'Pilih atau tambahkan perusahaan atau asal Anda'
-  if (!f.employee) errors.employee = 'Pilih orang yang ingin ditemui dari daftar'
+  if (!f.employee_name.trim()) errors.employee_name = 'Nama karyawan wajib diisi'
+  if (!f.employee_department.trim()) errors.employee_department = 'Departemen atau bagian wajib diisi'
   if (!f.purpose.trim()) errors.purpose = 'Tujuan kunjungan wajib diisi'
   if (!f.consent) errors.consent = 'Centang persetujuan terlebih dahulu'
   return errors
@@ -73,7 +81,8 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
       phone: form.phone,
       purpose: form.purpose.trim(),
       company_id: form.company.id,
-      employee_id: form.employee.id,
+      employee_name: form.employee_name.trim(),
+      employee_department: form.employee_department.trim(),
       consent: true,
     })
   }
@@ -123,9 +132,28 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
         >
           <CompanyField id="company" value={form.company} onChange={set('company')} invalid={!!errors.company} />
         </Field>
-        <Field id="employee" label="Bertemu dengan" error={errors.employee} hint="Ketik nama karyawan, lalu pilih nama dan departemennya.">
-          <EmployeeField id="employee" value={form.employee} onChange={set('employee')} invalid={!!errors.employee} />
-        </Field>
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Field id="employee_name" label="Nama karyawan yang ingin ditemui" error={errors.employee_name}>
+            <Input
+              id="employee_name"
+              maxLength={100}
+              value={form.employee_name}
+              onChange={(e) => set('employee_name')(e.target.value)}
+              aria-invalid={!!errors.employee_name || undefined}
+              placeholder="Contoh: Budi Hartono"
+            />
+          </Field>
+          <Field id="employee_department" label="Departemen atau bagian" error={errors.employee_department}>
+            <Input
+              id="employee_department"
+              maxLength={100}
+              value={form.employee_department}
+              onChange={(e) => set('employee_department')(e.target.value)}
+              aria-invalid={!!errors.employee_department || undefined}
+              placeholder="Contoh: Keuangan"
+            />
+          </Field>
+        </div>
         <Field
           id="purpose"
           label="Tujuan kunjungan"

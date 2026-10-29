@@ -13,14 +13,18 @@ import { useAction } from '@/lib/useAction'
 import { initials } from '@/lib/format'
 import { cn } from '@/lib/utils'
 
+// `hidden`: menu disembunyikan tapi halamannya tetap ada, supaya bisa
+// dimunculkan lagi cukup dengan menghapus tanda ini.
 const NAV = [
   { to: '/petugas', end: true, label: 'Beranda', icon: LuHouse, badgeKey: 'menunggu' },
   { to: '/petugas/riwayat', label: 'Riwayat kunjungan', icon: LuHistory },
-  { to: '/petugas/karyawan', label: 'Karyawan', icon: LuUsers },
+  // Disembunyikan 29 Oktober 2026: tamu sekarang mengetik sendiri nama karyawan
+  // dan departemen, jadi daftar karyawan tidak dipakai di form tamu.
+  { to: '/petugas/karyawan', label: 'Karyawan', icon: LuUsers, hidden: true },
   { to: '/petugas/perusahaan', label: 'Perusahaan', icon: LuBuilding2 },
   { to: '/petugas/akun', label: 'Akun petugas', icon: LuUserCog },
   { to: '/petugas/qr', label: 'Kode QR pendaftaran', icon: LuQrCode },
-]
+].filter((item) => !item.hidden)
 
 function SidebarContent({ onNavigate }) {
   const navigate = useNavigate()

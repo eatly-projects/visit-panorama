@@ -28,7 +28,7 @@ export function DeleteByFilterDialog({ open, onOpenChange, filters, apiParams })
   const lines = [
     (filters.from || filters.to) && ['Tanggal kunjungan', formatDateRange(filters.from, filters.to)],
     filters.phone && ['Tamu dengan nomor', formatPhone(filters.phone)],
-    filters.employee_id && ['Orang yang ditemui', filters.employee_name],
+    filters.employee && ['Nama karyawan yang ditemui mengandung', `"${filters.employee}"`],
     filters.company_id && ['Perusahaan atau asal', filters.company_name],
     filters.status && ['Status', STATUS[filters.status]?.label],
   ].filter(Boolean)

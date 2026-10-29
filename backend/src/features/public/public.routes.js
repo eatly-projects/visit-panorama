@@ -1,11 +1,12 @@
 /**
- * Endpoint tanpa login untuk form tamu (docs/PLANNING.md §12). Hanya empat,
- * dan tidak ada satu pun yang mengembalikan data tamu lain.
+ * Endpoint tanpa login untuk form tamu (docs/PLANNING.md §12). Hanya tiga,
+ * dan tidak ada satu pun yang mengembalikan data tamu lain. Pencarian
+ * karyawan publik dicabut sejak nama karyawan diketik bebas oleh tamu
+ * (29 Oktober 2026), jadi daftar karyawan tidak lagi terbuka untuk umum.
  */
 
 import { Router } from 'express';
 import { z } from 'zod';
-import { searchPublic as searchEmployees } from '../employees/employees.service.js';
 import { searchPublic as searchCompanies, createFromPublic } from '../companies/companies.service.js';
 import { createFromForm } from '../visits/visits.service.js';
 import { formSchema } from '../visits/visits.schema.js';
@@ -21,12 +22,6 @@ const companySchema = z.object({
   name: z.string('Nama perusahaan wajib diisi').trim().min(1, 'Nama perusahaan wajib diisi').max(150, 'Nama perusahaan maksimal 150 karakter'),
   force: z.boolean().optional(),
 });
-
-publicRouter.get(
-  '/employees',
-  publicReadLimit,
-  asyncHandler(async (req, res) => res.json(await searchEmployees(queryText(req))))
-);
 
 publicRouter.get(
   '/companies',

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { LuPhone, LuRotateCcw, LuSearch } from 'react-icons/lu'
+import { LuPhone, LuRotateCcw, LuSearch, LuUserRound } from 'react-icons/lu'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -30,12 +30,6 @@ export function HistoryFilters({ filters, update, reset, hasAny }) {
   const companies = useQuery({
     queryKey: ['companies', 'filter', companyTerm],
     queryFn: () => api.get('/companies', { params: { q: companyTerm } }).then((r) => r.data.items),
-  })
-  const [employeeQuery, setEmployeeQuery] = useState('')
-  const employeeTerm = useDebounced(employeeQuery, 300)
-  const employees = useQuery({
-    queryKey: ['employees', 'filter', employeeTerm],
-    queryFn: () => api.get('/employees', { params: { q: employeeTerm } }).then((r) => r.data.items),
   })
 
   return (
@@ -93,21 +87,19 @@ export function HistoryFilters({ filters, update, reset, hasAny }) {
           />
         </div>
         <div className="space-y-1.5">
-          <Label className="font-semibold">Orang yang ditemui</Label>
-          <EntityFilter
-            placeholder="Cari nama karyawan"
-            allLabel="Semua karyawan"
-            value={filters.employee_id ? { id: filters.employee_id, name: filters.employee_name } : null}
-            onChange={(v) => update({ employee_id: v?.id, employee_name: v?.name })}
-            items={(employees.data ?? []).map((e) => ({
-              id: e.id,
-              name: e.name,
-              detail: [e.department, !e.is_active && 'Nonaktif'].filter(Boolean).join(', '),
-            }))}
-            loading={employees.isFetching}
-            onSearch={setEmployeeQuery}
-            emptyText="Karyawan tidak ditemukan."
-          />
+          <Label htmlFor="employee-filter" className="font-semibold">
+            Orang yang ditemui
+          </Label>
+          <div className="relative">
+            <LuUserRound className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
+            <DebouncedInput
+              id="employee-filter"
+              value={filters.employee}
+              onCommit={(employee) => update({ employee: employee.trim() })}
+              placeholder="Nama karyawan"
+              className="pl-10"
+            />
+          </div>
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="phone-filter" className="font-semibold">

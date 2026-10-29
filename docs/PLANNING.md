@@ -303,3 +303,10 @@ Teknologi mengikuti pola standar project Lutfi.
 - **Daftar menunggu persetujuan bisa dicari** berdasarkan nama tamu.
 - Notifikasi "Tamu baru" muncul di semua halaman petugas, tidak hanya di beranda.
 - Hapus sesuai filter juga melewati tamu berstatus **menunggu**, selain yang sedang berkunjung, karena keduanya masih dalam proses.
+
+## 19. Karyawan diketik bebas (keputusan Lutfi, 29 Oktober 2026)
+
+- Di form tamu, "Bertemu dengan" sekarang berupa **dua kolom ketik bebas yang wajib**: **Nama karyawan yang ingin ditemui** dan **Departemen atau bagian**. Keduanya disimpan sebagai teks di kunjungan (`employee_name`, `employee_department`, migrasi `0003_karyawan_ketik_bebas.sql`).
+- **Menu Karyawan disembunyikan**, tidak dihapus. Halamannya dan datanya tetap ada, dan bisa dimunculkan lagi dengan menghapus tanda `hidden` di `frontend/src/layouts/DashboardLayout.jsx`.
+- Pencarian karyawan publik (`GET /api/public/employees`) dicabut, karena form tidak memakainya lagi. Dengan begitu daftar karyawan tidak terbuka untuk umum.
+- Filter "Orang yang ditemui" di Riwayat menjadi kotak ketik yang mencari nama karyawan yang **mengandung** kata tersebut. Hapus sesuai filter memakai aturan yang sama, dan jumlah datanya selalu ditampilkan dulu sebelum dihapus.
