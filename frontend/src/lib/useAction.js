@@ -7,8 +7,9 @@ import { errorMessage } from './axios'
  * - loading: teks saat proses (opsional)
  * - success: teks atau fungsi (data, variables) => teks
  * - invalidate: daftar queryKey yang dimuat ulang setelah berhasil
+ * - errorText: (err) => teks error khusus (misalnya sesuai bahasa tamu)
  */
-export function useAction({ mutationFn, loading, success, invalidate = [], onSuccess, onError }) {
+export function useAction({ mutationFn, loading, success, invalidate = [], onSuccess, onError, errorText }) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn,
@@ -23,7 +24,7 @@ export function useAction({ mutationFn, loading, success, invalidate = [], onSuc
       invalidate.forEach((queryKey) => qc.invalidateQueries({ queryKey }))
     },
     onError: (err, variables, context) => {
-      toast.error(errorMessage(err), { id: context?.toastId })
+      toast.error(errorText ? errorText(err) : errorMessage(err), { id: context?.toastId })
       onError?.(err, variables)
     },
   })

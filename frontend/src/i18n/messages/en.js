@@ -1,0 +1,107 @@
+/**
+ * Visitor-page text in English. Written for meaning, not word for word, so it
+ * reads naturally to international guests. Keep the same keys as id.js.
+ */
+export default {
+  meta: {
+    title: 'Panorama Head Office Visitors',
+  },
+  language: {
+    button: 'Language',
+    dialogTitle: 'Choose your language',
+    dialogHint: 'You can change it at any time with the language button at the top of the page.',
+  },
+  theme: {
+    toLight: 'Switch to light mode',
+    toDark: 'Switch to dark mode',
+  },
+  common: {
+    change: 'Change',
+    changeSelection: 'Change selection',
+  },
+  page: {
+    welcome: 'Welcome to Panorama Head Office',
+    lead: 'Please fill in your visit details below. Once you have submitted them, show your screen to our receptionist to receive a visitor pass.',
+    footerNote: 'Panorama Group. Your ID is only checked by our receptionist. We do not keep or hold it.',
+    staffLogin: 'Staff login',
+  },
+  form: {
+    idNotice: 'Please have your ID card or passport ready to show to our receptionist.',
+    sectionYou: 'Your details',
+    name: 'Full name',
+    nameHint: 'Enter your name exactly as it appears on your ID card or passport.',
+    namePlaceholder: 'e.g. Sarah Johnson',
+    phone: 'Mobile or WhatsApp number',
+    phoneHint: 'Our receptionist will use this to contact you if needed. For a non-Indonesian number, include your country code, e.g. +65.',
+    phonePlaceholder: '+65 9123 4567',
+    sectionVisit: 'Your visit',
+    company: 'Company or organisation',
+    companyHint: 'Enter the company or organisation you represent. If you are visiting in a personal capacity, enter where you are from, such as your city.',
+    employeeName: 'Name of the person you are visiting',
+    employeeNamePlaceholder: 'e.g. Budi Hartono',
+    employeeDept: 'Their department or company',
+    employeeDeptPlaceholder: 'e.g. Finance',
+    purpose: 'Purpose of visit',
+    purposePlaceholder: 'e.g. Meeting to discuss a corporate travel package',
+    consentGuest:
+      'I agree that Panorama Group may use the information above to keep a visitor record and for office security. The information is kept only as long as necessary and is deleted periodically.',
+    consentStaff:
+      'The visitor has read and agreed that Panorama Group may use their information to keep a visitor record and for office security. The information is kept only as long as necessary and is deleted periodically.',
+    submit: 'Submit visit details',
+    submitting: 'Sending…',
+    missingLead: 'The button will be enabled once everything is complete. Still needed:',
+    missing: {
+      name: 'full name',
+      phone: 'mobile number',
+      phoneValid: 'a valid mobile number',
+      company: 'company or organisation',
+      employeeName: 'name of the person you are visiting',
+      employeeDept: 'their department or company',
+      purpose: 'purpose of visit',
+      consent: 'tick the consent box',
+    },
+    errors: {
+      name: 'Please enter your full name',
+      phoneRequired: 'Please enter your mobile number',
+      phoneInvalid: 'Please enter a valid mobile number, e.g. +65 9123 4567, or 0812 3456 7890 for an Indonesian number',
+      company: 'Please choose or add your company or organisation',
+      employeeName: 'Please enter the name of the person you are visiting',
+      employeeDept: 'Please enter their department or company',
+      purpose: 'Please tell us the purpose of your visit',
+      consent: 'Please tick the consent box',
+    },
+    toast: {
+      sending: 'Sending your visit details…',
+      sent: 'Your visit details have been sent',
+      incomplete: 'Some details are still missing',
+    },
+  },
+  company: {
+    placeholder: 'Type your company name',
+    typeMore: 'Type at least 2 letters to search.',
+    didYouMean: 'Did you mean one of these?',
+    addAnyway: 'No, add "{name}" as new',
+    add: 'Add "{name}"',
+    addHint: 'Not on the list yet. Tap to add it.',
+    searching: 'Searching…',
+    checking: 'Checking the name…',
+    added: '"{name}" has been added',
+    exists: '"{name}" is already on the list and has been selected',
+  },
+  success: {
+    badge: 'Visit details sent',
+    thanks: 'Thank you, {name}',
+    instruction: 'Please go to the reception desk and show this screen together with your ID card or passport to receive your visitor pass.',
+    nameLabel: 'Visitor name',
+    sentAt: 'Submitted on',
+    returnCard: 'Please remember to return your visitor pass to reception before you leave the building.',
+    another: 'Fill in the form for another visitor',
+  },
+  errors: {
+    network: 'Unable to reach the server. Please check your internet connection.',
+    timeout: 'The server is taking too long to respond. Please try again.',
+    tooMany: 'Too many attempts. Please wait a moment and try again.',
+    checkData: 'Some of your details are not quite right. Please check them and try again.',
+    generic: 'Something went wrong. Please try again.',
+  },
+}

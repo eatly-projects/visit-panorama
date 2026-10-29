@@ -11,6 +11,7 @@ import { ThemeToggle } from '@/components/ThemeToggle'
 import { BrandSwoosh } from '@/components/BrandSwoosh'
 import { useAction } from '@/lib/useAction'
 import { authApi, useMe } from '../api/authApi'
+import { LanguageProvider } from '@/i18n'
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -32,7 +33,9 @@ export function LoginPage() {
 
   if (officer) return <Navigate to="/petugas" replace />
 
+  // Halaman petugas selalu Bahasa Indonesia.
   return (
+    <LanguageProvider lang="id">
     <div className="relative flex min-h-svh flex-col overflow-hidden bg-background">
       <BrandSwoosh className="pointer-events-none absolute -top-24 -right-40 w-[640px] opacity-[0.12] sm:-right-20" />
       <header className="relative flex items-center justify-between px-4 py-4 sm:px-8">
@@ -88,5 +91,6 @@ export function LoginPage() {
         </div>
       </main>
     </div>
+    </LanguageProvider>
   )
 }

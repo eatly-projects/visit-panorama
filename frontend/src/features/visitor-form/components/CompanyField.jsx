@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { LuBuilding2, LuPlus } from 'react-icons/lu'
 import { PickerItem, PickerNote, SearchPicker, useDebounced } from '@/components/SearchPicker'
 import { useAction } from '@/lib/useAction'
+import { useT } from '@/i18n'
+import { friendlyError } from '@/i18n/format'
 import { publicApi } from '../api/publicApi'
 
 /**
@@ -10,7 +12,8 @@ import { publicApi } from '../api/publicApi'
  * Server yang menjaga supaya nama tidak dobel; kalau ada nama yang mirip,
  * tamu ditanya dulu "Apakah maksud Anda…?" (docs/PLANNING.md §7).
  */
-export function CompanyField({ id, value, onChange, invalid }) {
+export function CompanyField({ value, onChange, invalid }) {
+  const { t, lang } = useT()
   const [query, setQuery] = useState('')
   const [similar, setSimilar] = useState(null)
   const term = useDebounced(query.trim())
@@ -26,10 +29,11 @@ export function CompanyField({ id, value, onChange, invalid }) {
     mutationFn: publicApi.createCompany,
     success: (data) =>
       data.status === 'created'
-        ? `"${data.company.name}" ditambahkan`
+        ? t('company.added', { name: data.company.name })
         : data.status === 'exists'
-          ? `"${data.company.name}" sudah terdaftar dan langsung dipilih`
+          ? t('company.exists', { name: data.company.name })
           : null,
+    errorText: (err) => friendlyError(err, t, lang),
     onSuccess: (data) => {
       if (data.status === 'similar') {
         setSimilar({ name: query.trim(), candidates: data.candidates })
@@ -49,9 +53,8 @@ export function CompanyField({ id, value, onChange, invalid }) {
 
   return (
     <SearchPicker
-      id={id}
       icon={LuBuilding2}
-      placeholder="Ketik nama perusahaan"
+      placeholder={t('company.placeholder')}
       invalid={invalid}
       selected={value ? { title: value.name } : null}
       onClear={() => onChange(null)}
@@ -61,19 +64,19 @@ export function CompanyField({ id, value, onChange, invalid }) {
         setSimilar(null)
       }}
       renderResults={() => {
-        if (typed.length < 2) return <PickerNote>Ketik minimal 2 huruf untuk mencari.</PickerNote>
+        if (typed.length < 2) return <PickerNote>{t('company.typeMore')}</PickerNote>
 
         if (similar) {
           return (
             <>
-              <PickerNote>Apakah maksud Anda salah satu nama ini?</PickerNote>
+              <PickerNote>{t('company.didYouMean')}</PickerNote>
               {similar.candidates.map((c) => (
                 <PickerItem key={c.id} value={`mirip-${c.id}`} title={c.name} icon={LuBuilding2} onSelect={() => choose(c)} />
               ))}
               <PickerItem
                 value="tetap-tambah"
                 icon={LuPlus}
-                title={`Bukan, tetap tambahkan "${similar.name}"`}
+                title={t('company.addAnyway', { name: similar.name })}
                 onSelect={() => create.mutate({ name: similar.name, force: true })}
               />
             </>
@@ -85,13 +88,13 @@ export function CompanyField({ id, value, onChange, invalid }) {
             {results.map((c) => (
               <PickerItem key={c.id} value={c.id} title={c.name} icon={LuBuilding2} onSelect={() => choose(c)} />
             ))}
-            {isFetching && !results.length && <PickerNote>Mencari…</PickerNote>}
+            {isFetching && !results.length && <PickerNote>{t('company.searching')}</PickerNote>}
             <PickerItem
               value="tambah-baru"
               icon={LuPlus}
               className="text-brand-ink data-selected:text-brand-ink"
-              title={create.isPending ? 'Memeriksa nama…' : `Tambahkan "${typed}"`}
-              subtitle={!results.length && !isFetching ? 'Belum terdaftar. Tekan untuk menambahkannya.' : undefined}
+              title={create.isPending ? t('company.checking') : t('company.add', { name: typed })}
+              subtitle={!results.length && !isFetching ? t('company.addHint') : undefined}
               onSelect={() => !create.isPending && create.mutate({ name: typed })}
             />
           </>

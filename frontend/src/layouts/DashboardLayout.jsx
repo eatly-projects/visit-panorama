@@ -9,6 +9,7 @@ import { ThemeToggle } from '@/components/ThemeToggle'
 import { useMe, authApi } from '@/features/auth/api/authApi'
 import { useSummary } from '@/features/visits/api/visitsApi'
 import { useNewArrivalToast } from '@/features/visits/hooks/useNewArrivalToast'
+import { LanguageProvider } from '@/i18n'
 import { useAction } from '@/lib/useAction'
 import { initials } from '@/lib/format'
 import { cn } from '@/lib/utils'
@@ -105,7 +106,10 @@ export function DashboardLayout() {
   const [open, setOpen] = useState(false)
   useNewArrivalToast()
 
+  // Halaman petugas selalu Bahasa Indonesia, apa pun bahasa yang dipilih tamu
+  // di browser yang sama.
   return (
+    <LanguageProvider lang="id">
     <div className="min-h-svh bg-background lg:flex">
       <aside className="no-print sticky top-0 hidden h-svh w-72 shrink-0 border-r bg-sidebar lg:block">
         <SidebarContent />
@@ -133,5 +137,6 @@ export function DashboardLayout() {
         </div>
       </main>
     </div>
+    </LanguageProvider>
   )
 }

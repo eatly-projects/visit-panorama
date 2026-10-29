@@ -4,6 +4,7 @@ import { LuSearch, LuX } from 'react-icons/lu'
 import { Command, CommandItem, CommandList } from '@/components/ui/command'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { useT } from '@/i18n'
 
 /** Nilai yang baru dipakai setelah pengguna berhenti mengetik sejenak. */
 export function useDebounced(value, delay = 300) {
@@ -24,17 +25,18 @@ export function useDebounced(value, delay = 300) {
  */
 export function SearchPicker({ id, placeholder, selected, onClear, query, onQueryChange, renderResults, invalid, icon: Icon = LuSearch }) {
   const [focused, setFocused] = useState(false)
+  const { t } = useT()
 
   if (selected) {
     return (
       <div className="flex items-center gap-3 rounded-lg border border-brand/40 bg-brand-soft px-3.5 py-2.5">
         <div className="min-w-0 flex-1">
-          <p className="truncate font-semibold">{selected.title}</p>
-          {selected.subtitle && <p className="truncate text-sm text-muted-foreground">{selected.subtitle}</p>}
+          <p className="font-semibold break-words">{selected.title}</p>
+          {selected.subtitle && <p className="text-sm break-words text-muted-foreground">{selected.subtitle}</p>}
         </div>
-        <Button type="button" variant="ghost" size="sm" onClick={onClear} aria-label="Ganti pilihan">
+        <Button type="button" variant="ghost" size="sm" onClick={onClear} aria-label={t('common.changeSelection')}>
           <LuX />
-          Ganti
+          {t('common.change')}
         </Button>
       </div>
     )

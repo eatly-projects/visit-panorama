@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import toast from 'react-hot-toast'
-import { LuSend } from 'react-icons/lu'
+import { LuIdCard, LuSend } from 'react-icons/lu'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -9,6 +9,8 @@ import { Field } from '@/components/Field'
 import { useAction } from '@/lib/useAction'
 import { normalizePhone } from '@/lib/phone'
 import { cn } from '@/lib/utils'
+import { useT } from '@/i18n'
+import { friendlyError } from '@/i18n/format'
 import { publicApi } from '../api/publicApi'
 import { CompanyField } from './CompanyField'
 
@@ -27,46 +29,48 @@ const EMPTY = {
 const ORDER = ['visitor_name', 'phone', 'company', 'employee_name', 'employee_department', 'purpose', 'consent']
 
 // Kolom sesuai arahan atasan (29 Oktober 2026): semua wajib; alamat tidak
-// diminta karena termasuk data pribadi.
+// diminta karena termasuk data pribadi. Teks pesan diambil dari terjemahan.
 function validate(f) {
   const errors = {}
-  if (!f.visitor_name.trim()) errors.visitor_name = 'Nama lengkap wajib diisi'
-  if (!f.phone.trim()) errors.phone = 'Nomor HP wajib diisi'
-  else if (!normalizePhone(f.phone)) errors.phone = 'Nomor HP tidak valid. Contoh: 0812 3456 7890'
-  if (!f.company) errors.company = 'Pilih atau tambahkan perusahaan atau asal Anda'
-  if (!f.employee_name.trim()) errors.employee_name = 'Nama karyawan wajib diisi'
-  if (!f.employee_department.trim()) errors.employee_department = 'Departemen atau perusahaan wajib diisi'
-  if (!f.purpose.trim()) errors.purpose = 'Tujuan kunjungan wajib diisi'
-  if (!f.consent) errors.consent = 'Centang persetujuan terlebih dahulu'
+  if (!f.visitor_name.trim()) errors.visitor_name = 'name'
+  if (!f.phone.trim()) errors.phone = 'phoneRequired'
+  else if (!normalizePhone(f.phone)) errors.phone = 'phoneInvalid'
+  if (!f.company) errors.company = 'company'
+  if (!f.employee_name.trim()) errors.employee_name = 'employeeName'
+  if (!f.employee_department.trim()) errors.employee_department = 'employeeDept'
+  if (!f.purpose.trim()) errors.purpose = 'purpose'
+  if (!f.consent) errors.consent = 'consent'
   return errors
 }
 
 /**
- * Daftar yang belum lengkap, ditampilkan di bawah tombol kirim. Tombol baru
- * aktif setelah daftar ini kosong (permintaan Lutfi, 29 Oktober 2026).
+ * Yang belum lengkap, ditampilkan di bawah tombol kirim. Tombol baru aktif
+ * setelah daftar ini kosong (permintaan Lutfi, 29 Oktober 2026).
  */
 function missingItems(f) {
   const items = []
-  if (!f.visitor_name.trim()) items.push('nama lengkap')
-  if (!f.phone.trim()) items.push('nomor HP')
-  else if (!normalizePhone(f.phone)) items.push('nomor HP yang benar')
-  if (!f.company) items.push('perusahaan atau asal')
-  if (!f.employee_name.trim()) items.push('nama karyawan')
-  if (!f.employee_department.trim()) items.push('departemen atau perusahaan')
-  if (!f.purpose.trim()) items.push('tujuan kunjungan')
-  if (!f.consent) items.push('centang persetujuan')
+  if (!f.visitor_name.trim()) items.push('name')
+  if (!f.phone.trim()) items.push('phone')
+  else if (!normalizePhone(f.phone)) items.push('phoneValid')
+  if (!f.company) items.push('company')
+  if (!f.employee_name.trim()) items.push('employeeName')
+  if (!f.employee_department.trim()) items.push('employeeDept')
+  if (!f.purpose.trim()) items.push('purpose')
+  if (!f.consent) items.push('consent')
   return items
 }
 
 /**
- * Form data kunjungan. Dipakai tamu (lewat QR) dan petugas (untuk tamu
- * yang tidak membawa HP; mode="petugas").
+ * Form data kunjungan. Dipakai tamu (lewat QR, dua bahasa) dan petugas
+ * (untuk tamu yang tidak membawa HP; mode="petugas", selalu Bahasa Indonesia).
  */
 export function VisitorForm({ mode = 'tamu', onSubmitted }) {
+  const { t, lang, locale } = useT()
   const [form, setForm] = useState(EMPTY)
   const [errors, setErrors] = useState({})
   const formRef = useRef(null)
   const missing = missingItems(form)
+  const errorText = (key) => (errors[key] ? t(`form.errors.${errors[key]}`) : undefined)
 
   const set = (key) => (value) => {
     setForm((f) => ({ ...f, [key]: value }))
@@ -75,9 +79,10 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
 
   const submit = useAction({
     mutationFn: publicApi.submitVisit,
-    loading: 'Mengirim data kunjungan…',
-    success: 'Data kunjungan terkirim',
+    loading: t('form.toast.sending'),
+    success: t('form.toast.sent'),
     invalidate: [['visits']],
+    errorText: (err) => friendlyError(err, t, lang),
     onSuccess: (data) => {
       setForm(EMPTY)
       onSubmitted?.(data)
@@ -90,7 +95,7 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
     setErrors(found)
     const first = ORDER.find((k) => found[k])
     if (first) {
-      toast.error('Masih ada data yang perlu dilengkapi')
+      toast.error(t('form.toast.incomplete'))
       // Kolom perusahaan memakai komponen pencarian yang id-nya ada di wadah,
       // jadi fokuskan isian di dalamnya.
       const target = formRef.current?.querySelector(`#${first}`)
@@ -111,8 +116,14 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
   return (
     <form ref={formRef} onSubmit={handleSubmit} noValidate className="space-y-8">
       <fieldset className="space-y-5">
-        <legend className="mb-5 text-lg font-bold">Data diri</legend>
-        <Field id="visitor_name" label="Nama lengkap" error={errors.visitor_name}>
+        <legend className="mb-5 text-lg font-bold">{t('form.sectionYou')}</legend>
+        {mode === 'tamu' && (
+          <div className="flex gap-3 rounded-xl border border-brand/40 bg-brand-soft p-4">
+            <LuIdCard className="mt-0.5 size-5 shrink-0 text-brand-ink" aria-hidden />
+            <p className="text-[15px] leading-relaxed font-semibold">{t('form.idNotice')}</p>
+          </div>
+        )}
+        <Field id="visitor_name" label={t('form.name')} error={errorText('visitor_name')} hint={t('form.nameHint')}>
           <Input
             id="visitor_name"
             autoComplete="name"
@@ -120,74 +131,62 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
             value={form.visitor_name}
             onChange={(e) => set('visitor_name')(e.target.value)}
             aria-invalid={!!errors.visitor_name || undefined}
-            placeholder="Contoh: Budi Santoso"
+            placeholder={t('form.namePlaceholder')}
           />
         </Field>
-        <Field
-          id="phone"
-          label="Nomor HP atau WhatsApp"
-          error={errors.phone}
-          hint="Dipakai resepsionis untuk menghubungi Anda bila diperlukan."
-        >
+        <Field id="phone" label={t('form.phone')} error={errorText('phone')} hint={t('form.phoneHint')}>
           <Input
             id="phone"
             type="tel"
             inputMode="tel"
             autoComplete="tel"
-            maxLength={20}
+            maxLength={22}
             value={form.phone}
             onChange={(e) => set('phone')(e.target.value)}
             // Nomor yang salah langsung diberi tahu saat tamu pindah kolom,
             // karena tombol kirim tetap nonaktif selama nomornya salah.
             onBlur={() => {
-              if (form.phone.trim() && !normalizePhone(form.phone)) {
-                setErrors((e) => ({ ...e, phone: 'Nomor HP tidak valid. Contoh: 0812 3456 7890' }))
-              }
+              if (form.phone.trim() && !normalizePhone(form.phone)) setErrors((e) => ({ ...e, phone: 'phoneInvalid' }))
             }}
             aria-invalid={!!errors.phone || undefined}
-            placeholder="0812 3456 7890"
+            placeholder={t('form.phonePlaceholder')}
           />
         </Field>
       </fieldset>
 
       <fieldset className="space-y-5">
-        <legend className="mb-5 text-lg font-bold">Kunjungan</legend>
-        <Field
-          id="company"
-          label="Perusahaan atau asal"
-          error={errors.company}
-          hint="Tulis nama perusahaan atau instansi Anda. Kalau datang atas nama pribadi, tulis asal Anda, misalnya nama kota."
-        >
+        <legend className="mb-5 text-lg font-bold">{t('form.sectionVisit')}</legend>
+        <Field id="company" label={t('form.company')} error={errorText('company')} hint={t('form.companyHint')}>
           <div id="company">
             <CompanyField value={form.company} onChange={set('company')} invalid={!!errors.company} />
           </div>
         </Field>
         <div className="grid gap-5 sm:grid-cols-2">
-          <Field id="employee_name" label="Nama karyawan yang ingin ditemui" error={errors.employee_name}>
+          <Field id="employee_name" label={t('form.employeeName')} error={errorText('employee_name')}>
             <Input
               id="employee_name"
               maxLength={100}
               value={form.employee_name}
               onChange={(e) => set('employee_name')(e.target.value)}
               aria-invalid={!!errors.employee_name || undefined}
-              placeholder="Contoh: Budi Hartono"
+              placeholder={t('form.employeeNamePlaceholder')}
             />
           </Field>
-          <Field id="employee_department" label="Departemen atau perusahaan" error={errors.employee_department}>
+          <Field id="employee_department" label={t('form.employeeDept')} error={errorText('employee_department')}>
             <Input
               id="employee_department"
               maxLength={100}
               value={form.employee_department}
               onChange={(e) => set('employee_department')(e.target.value)}
               aria-invalid={!!errors.employee_department || undefined}
-              placeholder="Contoh: Keuangan"
+              placeholder={t('form.employeeDeptPlaceholder')}
             />
           </Field>
         </div>
         <Field
           id="purpose"
-          label="Tujuan kunjungan"
-          error={errors.purpose}
+          label={t('form.purpose')}
+          error={errorText('purpose')}
           aside={
             <span
               className={cn(
@@ -195,7 +194,7 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
                 form.purpose.length >= PURPOSE_MAX && 'font-semibold text-destructive'
               )}
             >
-              {form.purpose.length.toLocaleString('id-ID')}/{PURPOSE_MAX.toLocaleString('id-ID')}
+              {form.purpose.length.toLocaleString(locale)}/{PURPOSE_MAX.toLocaleString(locale)}
             </span>
           }
         >
@@ -206,7 +205,7 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
             value={form.purpose}
             onChange={(e) => set('purpose')(e.target.value)}
             aria-invalid={!!errors.purpose || undefined}
-            placeholder="Contoh: rapat penawaran kerja sama paket wisata"
+            placeholder={t('form.purposePlaceholder')}
           />
         </Field>
       </fieldset>
@@ -227,15 +226,11 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
             className="mt-0.5 size-5 rounded-md"
             aria-invalid={!!errors.consent || undefined}
           />
-          <span className="text-[15px] leading-relaxed">
-            {mode === 'petugas'
-              ? 'Tamu sudah membaca dan menyetujui bahwa datanya digunakan oleh Panorama Group untuk pencatatan tamu dan keamanan kantor. Data disimpan selama diperlukan dan dihapus secara berkala.'
-              : 'Saya setuju data di atas digunakan oleh Panorama Group untuk pencatatan tamu dan keamanan kantor. Data disimpan selama diperlukan dan dihapus secara berkala.'}
-          </span>
+          <span className="text-[15px] leading-relaxed">{mode === 'petugas' ? t('form.consentStaff') : t('form.consentGuest')}</span>
         </label>
         {errors.consent && (
           <p className="text-sm font-medium text-destructive" role="alert">
-            {errors.consent}
+            {errorText('consent')}
           </p>
         )}
       </div>
@@ -249,11 +244,12 @@ export function VisitorForm({ mode = 'tamu', onSubmitted }) {
           aria-describedby={missing.length ? 'belum-lengkap' : undefined}
         >
           <LuSend />
-          {submit.isPending ? 'Mengirim…' : 'Kirim data kunjungan'}
+          {submit.isPending ? t('form.submitting') : t('form.submit')}
         </Button>
         {missing.length > 0 && (
           <p id="belum-lengkap" className="text-center text-sm leading-relaxed text-muted-foreground" aria-live="polite">
-            Tombol aktif setelah semua terisi. Yang belum: <span className="font-semibold text-foreground">{missing.join(', ')}</span>.
+            {t('form.missingLead')}{' '}
+            <span className="font-semibold text-foreground">{missing.map((k) => t(`form.missing.${k}`)).join(', ')}</span>.
           </p>
         )}
       </div>

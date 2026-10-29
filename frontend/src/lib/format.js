@@ -72,8 +72,15 @@ export function greeting() {
   return 'Selamat malam'
 }
 
-/** "081234567890" → "0812 3456 7890" */
-export const formatPhone = (phone) => (phone ? phone.replace(/(\d{4})(?=\d)/g, '$1 ') : '')
+/**
+ * "081234567890" → "0812 3456 7890". Nomor luar negeri (+…) ditampilkan apa
+ * adanya karena panjang kode negaranya berbeda-beda.
+ */
+export const formatPhone = (phone) => {
+  if (!phone) return ''
+  if (phone.startsWith('+')) return phone
+  return phone.replace(/(\d{4})(?=\d)/g, '$1 ')
+}
 
 /**
  * Rentang tanggal lengkap dari dua string YYYY-MM-DD:

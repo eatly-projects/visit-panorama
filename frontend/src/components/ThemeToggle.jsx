@@ -2,11 +2,13 @@ import { LuMoon, LuSun } from 'react-icons/lu'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { useThemeStore } from '@/stores/themeStore'
+import { useT } from '@/i18n'
 
 /** Tombol ganti mode terang / gelap. `withLabel` menampilkan teks di sebelah ikon. */
 export function ThemeToggle({ withLabel = false, className }) {
   const { theme, toggle } = useThemeStore()
-  const nextLabel = theme === 'gelap' ? 'Pakai mode terang' : 'Pakai mode gelap'
+  const { t } = useT()
+  const nextLabel = theme === 'gelap' ? t('theme.toLight') : t('theme.toDark')
   const Icon = theme === 'gelap' ? LuSun : LuMoon
 
   if (withLabel) {

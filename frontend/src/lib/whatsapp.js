@@ -2,11 +2,12 @@ import { formatDateTime } from './format'
 
 /**
  * Tautan WhatsApp untuk mengingatkan tamu yang belum mengembalikan kartu
- * visitor (docs/PLANNING.md §17). Nomor disimpan berawalan 0, sedangkan
- * wa.me butuh kode negara 62.
+ * visitor (docs/PLANNING.md §17). wa.me butuh nomor dengan kode negara tanpa
+ * "+": nomor Indonesia (berawalan 0) diubah ke 62, nomor luar negeri (+…)
+ * cukup dibuang tanda plusnya.
  */
 export function whatsappReminderLink(visit) {
-  const number = `62${visit.phone.slice(1)}`
+  const number = visit.phone.startsWith('+') ? visit.phone.slice(1) : `62${visit.phone.slice(1)}`
   const text = [
     `Yth. Bapak/Ibu ${visit.visitor_name},`,
     '',

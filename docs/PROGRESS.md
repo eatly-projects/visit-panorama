@@ -53,6 +53,9 @@
   - "Minggu lalu" menghasilkan file 19–25 Oktober 2026 berisi 65 kunjungan, dan semua tanggalnya di dalam rentang.
   - "Bulan lalu" yang kosong memunculkan pesan tanpa mengunduh file.
   - Kalender harian dan rentang berfungsi.
+- Penegasan kartu identitas di form dan poster, form tamu dua bahasa (Indonesia dan English), dan nomor HP luar negeri.
+  - Sudah dicek di browser: jendela pilih bahasa muncul saat pertama kali dibuka, seluruh form dan layar terima kasih tampil dalam bahasa Inggris, form berhasil terkirim dengan nomor +65, dan bahasa bisa diganti kembali lewat tombol.
+  - Data uji sudah dihapus.
 - Data dummy bulan ini sudah diisi: 274 kunjungan bernomor HP `0899000…`. Hapus dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
 - Catatan `npm audit`: ada celah tingkat sedang di pustaka `uuid` milik exceljs. Tidak berdampak di sini, karena exceljs hanya menyusun file di browser dari data aplikasi sendiri.
 

@@ -357,3 +357,21 @@ Teknologi mengikuti pola standar project Lutfi.
 - Periode yang akan diunduh ditampilkan lengkap sebelum tombol ditekan. Tanggal setelah hari ini tidak bisa dipilih.
 - Kalau ada filter daftar yang aktif (status, perusahaan, karyawan, nomor HP, atau pencarian), ada kotak centang untuk ikut menerapkannya. Bawaannya dicentang.
 - **Unduh PDF** tetap mengikuti periode dan filter yang sedang tampil di halaman.
+
+## 23. Kartu identitas dan dua bahasa (permintaan Lutfi, 29 Oktober 2026)
+
+- **Penegasan kartu identitas di form tamu:**
+  - Kotak di atas kolom nama: "Mohon siapkan kartu identitas Anda (KTP, SIM, atau paspor) untuk ditunjukkan kepada resepsionis kami."
+  - Petunjuk kolom nama: "Tulis sesuai nama di kartu identitas Anda."
+  - Layar terima kasih meminta tamu menunjukkan layar beserta kartu identitasnya.
+- Kalimat lama "kartu identitas tidak kami minta" diganti menjadi "**hanya diperlihatkan, tidak kami simpan atau tahan**" di footer form dan di poster QR. Poster PDF dan PNG sudah dibuat ulang.
+- **Dua bahasa di halaman tamu:** Bahasa Indonesia dan English.
+  - Saat pertama kali membuka form, muncul jendela pilih bahasa. Judulnya dalam semua bahasa, dan jendela tidak bisa ditutup sebelum memilih.
+  - Setelah itu bahasa diganti lewat tombol bahasa di kepala halaman. Pilihan tersimpan di browser.
+  - Terjemahan ditulis per kalimat sesuai makna (`frontend/src/i18n/messages/`).
+  - Menambah bahasa cukup dengan membuat file terjemahan baru dan mendaftarkannya di `frontend/src/i18n/languages.js`.
+  - Dashboard dan halaman masuk petugas tetap Bahasa Indonesia.
+- **Nomor HP luar negeri diterima** untuk tamu asing (keputusan Claude, supaya tamu asing bisa mengirim form):
+  - Nomor ditulis dengan kode negara, misalnya `+65 9123 4567`. Awalan `00` juga diterima.
+  - Nomor disimpan sebagai `+6591234567`, sedangkan nomor Indonesia tetap disimpan berawalan 0.
+  - Tombol WhatsApp memakai kode negara yang sesuai.

@@ -9,7 +9,7 @@ export const formSchema = z.object({
   phone: z
     .string('Nomor telepon wajib diisi')
     .transform((v) => normalizePhone(v))
-    .refine((v) => v !== null, 'Nomor telepon tidak valid. Contoh: 0812 3456 7890'),
+    .refine((v) => v !== null, 'Nomor HP tidak valid. Contoh: 0812 3456 7890, atau +65 9123 4567 untuk nomor luar negeri'),
   // Arahan atasan (29 Oktober 2026): perusahaan/asal dan tujuan kunjungan
   // wajib; alamat tidak diminta karena termasuk data pribadi.
   company_id: z.uuid('Pilih atau tambahkan perusahaan atau asal Anda'),
