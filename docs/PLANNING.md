@@ -345,3 +345,15 @@ Teknologi mengikuti pola standar project Lutfi.
     - **Halaman 1:** ringkasan, grafik per hari, dan peringkat.
     - **Halaman berikutnya:** daftar lengkap dengan nomor halaman.
 - **Data dummy bulan ini:** `npm run dummy -- isi` atau `npm run dummy -- hapus` dari folder `backend/`. Penandanya nomor HP berawalan `0899000`, jadi data asli tidak pernah tersentuh.
+
+## 22. Pilihan periode untuk Unduh Excel (permintaan Lutfi, 29 Oktober 2026)
+
+- Tombol **Unduh Excel** membuka jendela pilihan periode:
+  - **Harian:** satu tanggal yang dipilih di kalender, bawaannya hari ini.
+  - **Minggu lalu:** Senin sampai Minggu pekan lalu.
+  - **Bulan ini:** pilihan bawaan.
+  - **Bulan lalu.**
+  - **Rentang waktu tertentu:** tanggal awal dan akhir dipilih di kalender.
+- Periode yang akan diunduh ditampilkan lengkap sebelum tombol ditekan. Tanggal setelah hari ini tidak bisa dipilih.
+- Kalau ada filter daftar yang aktif (status, perusahaan, karyawan, nomor HP, atau pencarian), ada kotak centang untuk ikut menerapkannya. Bawaannya dicentang.
+- **Unduh PDF** tetap mengikuti periode dan filter yang sedang tampil di halaman.

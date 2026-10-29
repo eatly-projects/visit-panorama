@@ -1,15 +1,10 @@
 import { useSearchParams } from 'react-router-dom'
-import { todayISO } from '@/lib/format'
+import { thisMonth } from '../lib/periods'
 
 // Filter riwayat disimpan di alamat halaman, jadi tetap ada saat halaman
-// dimuat ulang dan bisa dibagikan ke petugas lain.
+// dimuat ulang dan bisa dibagikan ke petugas lain. Periode bawaannya bulan
+// ini (tanggal 1 sampai hari ini), permintaan Lutfi.
 const KEYS = ['q', 'phone', 'from', 'to', 'status', 'company_id', 'company_name', 'employee']
-
-/** Periode bawaan: bulan ini (tanggal 1 sampai hari ini). Permintaan Lutfi. */
-function thisMonth() {
-  const today = todayISO()
-  return { from: `${today.slice(0, 8)}01`, to: today }
-}
 
 export function useHistoryFilters() {
   const [params, setParams] = useSearchParams()

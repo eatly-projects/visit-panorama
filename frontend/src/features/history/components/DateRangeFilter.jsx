@@ -6,28 +6,16 @@ import { Calendar } from '@/components/ui/calendar'
 import { Button } from '@/components/ui/button'
 import { formatDateRange, todayISO } from '@/lib/format'
 import { cn } from '@/lib/utils'
-
-const pad = (n) => String(n).padStart(2, '0')
-const toISO = (d) => (d ? `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` : '')
-const fromISO = (s) => (s ? new Date(`${s}T00:00:00`) : undefined)
-
-function shift(iso, days) {
-  const d = fromISO(iso)
-  d.setDate(d.getDate() + days)
-  return toISO(d)
-}
+import { fromISO, lastMonth, shift, thisMonth, toISO } from '../lib/periods'
 
 function presets() {
   const today = todayISO()
-  const [y, m] = today.split('-').map(Number)
-  const firstThisMonth = `${y}-${pad(m)}-01`
-  const lastPrevMonth = shift(firstThisMonth, -1)
   return [
     { label: 'Hari ini', from: today, to: today },
     { label: 'Kemarin', from: shift(today, -1), to: shift(today, -1) },
     { label: '7 hari terakhir', from: shift(today, -6), to: today },
-    { label: 'Bulan ini', from: firstThisMonth, to: today },
-    { label: 'Bulan lalu', from: `${lastPrevMonth.slice(0, 8)}01`, to: lastPrevMonth },
+    { label: 'Bulan ini', ...thisMonth() },
+    { label: 'Bulan lalu', ...lastMonth() },
   ]
 }
 

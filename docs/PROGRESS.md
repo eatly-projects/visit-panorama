@@ -49,6 +49,10 @@
 - Riwayat berubah jadi dashboard (periode bawaan bulan ini, kartu angka, dan grafik), plus export Excel dan PDF.
   - Sudah dicek di browser: dashboard tampil rapi di desktop dan HP; file Excel diperiksa isinya (sheet, format tanggal, nomor HP, judul kolom membeku); halaman PDF dilihat sebagai gambar.
   - Belum dicek: membuka file hasil unduhan di Microsoft Excel sungguhan.
+- Unduh Excel sekarang bisa memilih periode: harian, minggu lalu, bulan ini, bulan lalu, atau rentang tertentu. Sudah dicek di browser:
+  - "Minggu lalu" menghasilkan file 19–25 Oktober 2026 berisi 65 kunjungan, dan semua tanggalnya di dalam rentang.
+  - "Bulan lalu" yang kosong memunculkan pesan tanpa mengunduh file.
+  - Kalender harian dan rentang berfungsi.
 - Data dummy bulan ini sudah diisi: 274 kunjungan bernomor HP `0899000…`. Hapus dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
 - Catatan `npm audit`: ada celah tingkat sedang di pustaka `uuid` milik exceljs. Tidak berdampak di sini, karena exceljs hanya menyusun file di browser dari data aplikasi sendiri.
 

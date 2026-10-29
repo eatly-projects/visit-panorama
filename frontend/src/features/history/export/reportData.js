@@ -48,7 +48,7 @@ function top(rows, key) {
 }
 
 /** Kalimat filter yang sedang aktif, supaya pembaca laporan tahu isinya data apa. */
-function describeFilters(f) {
+export function describeFilters(f) {
   const lines = []
   if (f.status) lines.push(`Status: ${STATUS[f.status]?.label}`)
   if (f.company_id) lines.push(`Perusahaan atau asal: ${f.company_name}`)
