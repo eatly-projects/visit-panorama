@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://GANTI-DENGAN-DOMAIN-BACKEND.vercel.app/api/$1"
+      "destination": "https://visit-panorama-api.vercel.app/api/$1"
     },
     { "source": "/(.*)", "destination": "/index.html" }
   ],

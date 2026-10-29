@@ -33,7 +33,8 @@
 
 ### Catatan
 - Database Supabase ada di region Eropa (Irlandia), jadi pencarian terasa sekitar 1–2 detik. Kalau ingin lebih cepat, pindahkan project Supabase ke region Singapore lalu ganti `regions` di `backend/vercel.json` menjadi `sin1`.
-- Setelah backend di-deploy, ganti `GANTI-DENGAN-DOMAIN-BACKEND` di `frontend/vercel.json` dengan domain backend yang sebenarnya.
+- Deploy Vercel: project backend bernama `visit-panorama-api` (Root Directory `backend`, env `DATABASE_URL` dan `JWT_SECRET`), project frontend bernama `visit-panorama` (Root Directory `frontend`, tanpa env). `frontend/vercel.json` sudah mengarah ke `https://visit-panorama-api.vercel.app`. Kalau Vercel memberi domain lain, ganti di file itu.
+- Kode QR mengarah ke domain tempat halaman QR dibuka, jadi cetak QR dari situs Vercel, bukan dari localhost.
 - Daftar karyawan masih kosong. Isi lewat menu Karyawan sebelum dipakai tamu.
 
 ### Langkah berikutnya
