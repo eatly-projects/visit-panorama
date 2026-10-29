@@ -290,7 +290,7 @@ Teknologi mengikuti pola standar project Lutfi.
 **3. Lain-lain.**
 - Nama kantor yang dipakai di pesan dan judul adalah **Panorama Head Office**.
 - Lutfi mengizinkan commit dan push setelah tugas selesai.
-- Warna mengikuti logo (oranye `#F0852F` dan merah `#ED1C24`), dengan pilihan **mode terang dan mode gelap**. Tombol ganti mode ada di form tamu, halaman masuk, dan sidebar petugas. Pilihan tersimpan di browser.
+- Warna mengikuti logo (oranye `#F0852F` dan merah `#ED1C24`), dengan pilihan **mode terang dan mode gelap**. **Bawaannya mode terang** (permintaan Lutfi), tidak mengikuti setelan HP atau komputer. Tombol ganti mode ada di form tamu, halaman masuk, dan sidebar petugas, dan pilihannya tersimpan di browser.
 - Kartu visitor tetap **kartu fisik**. Di layar petugas, nomornya ditampilkan dalam bentuk mirip kartu yang dirancang sendiri sementara (permintaan Lutfi). Bentuknya bisa disesuaikan setelah ada foto kartu asli.
 
 ## 18. Perubahan 29 Oktober 2026 (arahan atasan dan Lutfi)
