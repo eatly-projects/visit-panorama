@@ -4,7 +4,7 @@
  */
 export default {
   meta: {
-    title: 'Panorama Head Office Visitors',
+    title: 'Panorama Building Visitors',
   },
   language: {
     button: 'Language',
@@ -20,7 +20,7 @@ export default {
     changeSelection: 'Change selection',
   },
   page: {
-    welcome: 'Welcome to Panorama Head Office',
+    welcome: 'Welcome to Panorama Building',
     lead: 'Please fill in your visit details below. Once you have submitted them, show your screen to our receptionist to receive a visitor pass.',
     footerNote: 'Panorama Group. Your ID is only checked by our receptionist. We do not keep or hold it.',
     staffLogin: 'Staff login',

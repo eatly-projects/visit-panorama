@@ -272,23 +272,23 @@ Teknologi mengikuti pola standar project Lutfi.
 
 > Yth. Bapak/Ibu [Nama],
 >
-> Terima kasih atas kunjungan Bapak/Ibu ke Panorama Head Office pada [hari, tanggal pukul jam WIB] untuk bertemu dengan [Nama karyawan].
+> Terima kasih atas kunjungan Bapak/Ibu ke Panorama Building pada [hari, tanggal pukul jam WIB] untuk bertemu dengan [Nama karyawan].
 >
-> Berdasarkan catatan kami, kartu visitor nomor [nomor] yang Bapak/Ibu gunakan belum dikembalikan. Kami mohon kesediaan Bapak/Ibu untuk mengembalikan kartu tersebut ke meja resepsionis Panorama Head Office pada kesempatan pertama.
+> Berdasarkan catatan kami, kartu visitor nomor [nomor] yang Bapak/Ibu gunakan belum dikembalikan. Kami mohon kesediaan Bapak/Ibu untuk mengembalikan kartu tersebut ke meja resepsionis Panorama Building pada kesempatan pertama.
 >
 > Apabila kartu sudah dikembalikan atau terdapat kendala, mohon kabari kami melalui pesan ini.
 >
 > Atas perhatian dan kerja samanya, kami ucapkan terima kasih.
 >
 > Hormat kami,
-> Resepsionis Panorama Head Office
+> Resepsionis Panorama Building
 
 **2. Form bisa dibuka dari mana saja: diterima.** Form ini bersifat pengajuan, dan persetujuan tetap di tangan petugas. Pengaman yang dipasang:
 - Karyawan baru muncul setelah tamu mengetik minimal 2 huruf, dengan maksimal 8 hasil.
 - Endpoint publik diberi batas jumlah permintaan.
 
 **3. Lain-lain.**
-- Nama kantor yang dipakai di pesan dan judul adalah **Panorama Head Office**.
+- Nama kantor yang dipakai di pesan dan judul adalah **Panorama Building** (sebelumnya Panorama Head Office; diganti 2026-10-30, lihat bagian 24).
 - Lutfi mengizinkan commit dan push setelah tugas selesai.
 - Warna mengikuti logo (oranye `#F0852F` dan merah `#ED1C24`), dengan pilihan **mode terang dan mode gelap**. **Bawaannya mode terang** (permintaan Lutfi), tidak mengikuti setelan HP atau komputer. Tombol ganti mode ada di form tamu, halaman masuk, dan sidebar petugas, dan pilihannya tersimpan di browser.
 - Kartu visitor tetap **kartu fisik**. Di layar petugas, nomornya ditampilkan dalam bentuk mirip kartu yang dirancang sendiri sementara (permintaan Lutfi). Bentuknya bisa disesuaikan setelah ada foto kartu asli.
@@ -375,3 +375,8 @@ Teknologi mengikuti pola standar project Lutfi.
   - Nomor ditulis dengan kode negara, misalnya `+65 9123 4567`. Awalan `00` juga diterima.
   - Nomor disimpan sebagai `+6591234567`, sedangkan nomor Indonesia tetap disimpan berawalan 0.
   - Tombol WhatsApp memakai kode negara yang sesuai.
+
+## 24. Nama kantor menjadi Panorama Building (permintaan Lutfi, 30 Oktober 2026)
+
+- Semua teks yang tampil di aplikasi memakai **Panorama Building**, menggantikan Panorama Head Office: form tamu (Indonesia dan English), judul tab, halaman masuk dan sidebar petugas, pesan WhatsApp pengingat kartu, halaman Kode QR, file Excel dan PDF, serta poster QR (dibuat ulang).
+- Rencana kerja lama di `docs/superpowers/plans/` dibiarkan memakai nama lama sebagai catatan sejarah.

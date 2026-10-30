@@ -141,7 +141,7 @@ export async function buildPdf(report) {
   doc.setFont('helvetica', 'normal')
   doc.setFontSize(10.5)
   doc.setTextColor(...MUTED)
-  doc.text(txt(`Panorama Head Office, periode ${report.period}`), M, 36.5)
+  doc.text(txt(`Panorama Building, periode ${report.period}`), M, 36.5)
   const meta = [...report.filterLines, `Dibuat ${report.generatedAt}`].map(txt).join('   |   ')
   doc.setFontSize(8.5)
   doc.text(meta, M, 41.5, { maxWidth: PAGE_W - M * 2 })
@@ -222,7 +222,7 @@ export async function buildPdf(report) {
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(8)
     doc.setTextColor(...MUTED)
-    doc.text(txt(`Laporan Kunjungan Tamu Panorama Head Office, periode ${report.period}`), M, PAGE_H - 7)
+    doc.text(txt(`Laporan Kunjungan Tamu Panorama Building, periode ${report.period}`), M, PAGE_H - 7)
     doc.text(`Halaman ${i} dari ${pages}`, PAGE_W - M, PAGE_H - 7, { align: 'right' })
   }
 

@@ -47,7 +47,7 @@ function SidebarContent({ onNavigate }) {
     <div className="flex h-full flex-col">
       <div className="px-6 pt-6 pb-5">
         <Logo className="h-7" />
-        <p className="mt-2 text-sm font-medium text-muted-foreground">Buku tamu Head Office</p>
+        <p className="mt-2 text-sm font-medium text-muted-foreground">Buku tamu Panorama Building</p>
       </div>
 
       <nav className="flex-1 space-y-1 overflow-y-auto px-3" aria-label="Menu utama">

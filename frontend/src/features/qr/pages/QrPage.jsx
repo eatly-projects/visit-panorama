@@ -24,7 +24,7 @@ export function QrPage() {
       {/* Lembar cetak: putih polos di mode apa pun supaya hasil cetaknya sama. */}
       <div className="qr-sheet mx-auto flex max-w-md flex-col items-center rounded-3xl border bg-white p-8 text-center text-stone-900 shadow-sm sm:p-10 print:max-w-none print:border-0 print:shadow-none">
         <img src="/logo-panorama.png" alt="Panorama" className="h-10 w-auto" />
-        <h2 className="mt-8 text-2xl leading-tight font-extrabold tracking-tight sm:text-3xl">Selamat datang di Panorama Head Office</h2>
+        <h2 className="mt-8 text-2xl leading-tight font-extrabold tracking-tight sm:text-3xl">Selamat datang di Panorama Building</h2>
         <p className="mt-3 text-base text-stone-600">Scan kode ini untuk mengisi data kunjungan, lalu tunjukkan layar HP Anda ke resepsionis.</p>
         <div className="mt-8 rounded-2xl border-4 border-[#F0852F] p-4">
           <QRCodeSVG value={formUrl} size={240} level="M" marginSize={0} fgColor="#1c1917" />

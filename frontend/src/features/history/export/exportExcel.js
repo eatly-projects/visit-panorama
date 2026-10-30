@@ -64,13 +64,13 @@ function smallTable(ws, startRow, title, headers, rows) {
 /** Excel: sheet "Ringkasan" dan sheet "Daftar kunjungan". */
 export default async function exportExcel(report) {
   const wb = new ExcelJS.Workbook()
-  wb.creator = 'Panorama Head Office'
+  wb.creator = 'Panorama Building'
   wb.created = new Date()
 
   // ---- Ringkasan ----
   const sum = wb.addWorksheet('Ringkasan', { views: [{ showGridLines: false }] })
   sum.columns = [{ width: 44 }, { width: 22 }, { width: 18 }]
-  let r = titleBlock(sum, report, 'Laporan Kunjungan Tamu Panorama Head Office', 3)
+  let r = titleBlock(sum, report, 'Laporan Kunjungan Tamu Panorama Building', 3)
   r = smallTable(
     sum,
     r,

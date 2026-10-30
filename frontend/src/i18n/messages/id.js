@@ -1,7 +1,7 @@
 /** Teks halaman tamu dalam Bahasa Indonesia (bahasa utama, juga cadangan bila terjemahan lain belum ada). */
 export default {
   meta: {
-    title: 'Tamu Panorama Head Office',
+    title: 'Tamu Panorama Building',
   },
   language: {
     button: 'Bahasa',
@@ -17,7 +17,7 @@ export default {
     changeSelection: 'Ganti pilihan',
   },
   page: {
-    welcome: 'Selamat datang di Panorama Head Office',
+    welcome: 'Selamat datang di Panorama Building',
     lead: 'Isi data kunjungan di bawah ini. Setelah terkirim, tunjukkan layar Anda ke resepsionis untuk mendapatkan kartu visitor.',
     footerNote: 'Panorama Group. Kartu identitas Anda hanya diperlihatkan, tidak kami simpan atau tahan.',
     staffLogin: 'Masuk petugas',

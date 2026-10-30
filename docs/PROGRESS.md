@@ -56,7 +56,10 @@
 - Penegasan kartu identitas di form dan poster, form tamu dua bahasa (Indonesia dan English), dan nomor HP luar negeri.
   - Sudah dicek di browser: jendela pilih bahasa muncul saat pertama kali dibuka, seluruh form dan layar terima kasih tampil dalam bahasa Inggris, form berhasil terkirim dengan nomor +65, dan bahasa bisa diganti kembali lewat tombol.
   - Data uji sudah dihapus.
-- Data dummy bulan ini sudah diisi: 274 kunjungan bernomor HP `0899000…`. Hapus dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
+- Data dummy bulan ini sudah diisi: 274 kunjungan bernomor HP `0899000…`.
+
+## 30 Oktober 2026
+- Nama kantor di seluruh aplikasi diganti dari "Panorama Head Office" menjadi **Panorama Building**. Yang diganti: form tamu (Indonesia dan English), judul tab, halaman masuk, sidebar, pesan WhatsApp, halaman Kode QR, file Excel dan PDF, serta poster QR yang dibuat ulang. Build lolos. Hapus dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
 - Catatan `npm audit`: ada celah tingkat sedang di pustaka `uuid` milik exceljs. Tidak berdampak di sini, karena exceljs hanya menyusun file di browser dari data aplikasi sendiri.
 
 ### Langkah berikutnya

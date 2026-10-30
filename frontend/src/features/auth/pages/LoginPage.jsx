@@ -53,7 +53,7 @@ export function LoginPage() {
           <Logo className="mb-8 h-9" />
           <h1 className="text-[28px] leading-tight font-extrabold tracking-tight">Masuk sebagai petugas</h1>
           <p className="mt-2 text-[15px] text-muted-foreground">
-            Khusus resepsionis dan admin Panorama Head Office untuk menyetujui tamu dan mengelola data kunjungan.
+            Khusus resepsionis dan admin Panorama Building untuk menyetujui tamu dan mengelola data kunjungan.
           </p>
 
           <form
