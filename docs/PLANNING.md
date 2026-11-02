@@ -317,6 +317,7 @@ Teknologi mengikuti pola standar project Lutfi.
 - **Poster QR** (A4) untuk meja resepsionis tersedia dalam dua versi: `docs/poster/Poster-QR-Tamu-Panorama.pdf` dan `.png` (2382 × 3369 piksel). QR mengarah ke `https://visit-panorama.vercel.app/`.
   - Desain poster ada di `frontend/scripts/poster-qr/poster.html`.
   - Untuk membuat ulang (misalnya kalau domain berubah), jalankan dari folder `frontend/`: `npm run poster-qr`, atau `npm run poster-qr -- https://alamat-baru/`.
+  - Sejak 2 November 2026 perintah yang sama sekaligus membuat versi English (lihat bagian 25).
 
 ## 21. Dashboard Riwayat, export, dan data dummy (permintaan Lutfi, 29 Oktober 2026)
 
@@ -380,3 +381,10 @@ Teknologi mengikuti pola standar project Lutfi.
 
 - Semua teks yang tampil di aplikasi memakai **Panorama Building**, menggantikan Panorama Head Office: form tamu (Indonesia dan English), judul tab, halaman masuk dan sidebar petugas, pesan WhatsApp pengingat kartu, halaman Kode QR, file Excel dan PDF, serta poster QR (dibuat ulang).
 - Rencana kerja lama di `docs/superpowers/plans/` dibiarkan memakai nama lama sebagai catatan sejarah.
+
+## 25. Poster QR versi English (permintaan Lutfi, 2 November 2026)
+
+- Poster QR kini juga tersedia dalam English untuk tamu asing: `docs/poster/Poster-QR-Tamu-Panorama-English.pdf` dan `.png`. Desain, ukuran (A4), dan kode QR-nya sama dengan versi Indonesia.
+- Teks diterjemahkan sesuai makna dan memakai istilah yang sama dengan form tamu versi English, misalnya tombol "Submit visit details" dan "visitor pass".
+- Langkah 1 menambahkan "then choose English", karena form selalu menampilkan jendela pilih bahasa saat pertama kali dibuka. Kode QR tetap mengarah ke alamat yang sama.
+- Teks kedua bahasa ada di `frontend/scripts/poster-qr/build.mjs` (daftar `VERSIONS`). `npm run poster-qr` membuat kedua versi sekaligus.

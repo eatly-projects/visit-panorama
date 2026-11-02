@@ -59,8 +59,14 @@
 - Data dummy bulan ini sudah diisi: 274 kunjungan bernomor HP `0899000…`.
 
 ## 30 Oktober 2026
-- Nama kantor di seluruh aplikasi diganti dari "Panorama Head Office" menjadi **Panorama Building**. Yang diganti: form tamu (Indonesia dan English), judul tab, halaman masuk, sidebar, pesan WhatsApp, halaman Kode QR, file Excel dan PDF, serta poster QR yang dibuat ulang. Build lolos. Hapus dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
+- Nama kantor di seluruh aplikasi diganti dari "Panorama Head Office" menjadi **Panorama Building**. Yang diganti: form tamu (Indonesia dan English), judul tab, halaman masuk, sidebar, pesan WhatsApp, halaman Kode QR, file Excel dan PDF, serta poster QR yang dibuat ulang. Build lolos.
+- Pengingat: hapus data dummy dengan `npm run dummy -- hapus` dari folder `backend/` sebelum dipakai sungguhan.
 - Catatan `npm audit`: ada celah tingkat sedang di pustaka `uuid` milik exceljs. Tidak berdampak di sini, karena exceljs hanya menyusun file di browser dari data aplikasi sendiri.
+
+## 2 November 2026
+- Poster QR versi English dibuat: `docs/poster/Poster-QR-Tamu-Panorama-English.pdf` dan `.png`. `npm run poster-qr` kini membuat versi Indonesia dan English sekaligus.
+  - Sudah dicek: PDF satu halaman A4, gambar poster dilihat langsung, dan versi Indonesia tidak berubah (gambar PNG-nya identik dengan sebelumnya).
+  - Belum dicek: scan QR dengan HP nyata dan hasil cetaknya.
 
 ### Langkah berikutnya
 - Lutfi mencoba di lokal dan meneruskan masukan atasan.
