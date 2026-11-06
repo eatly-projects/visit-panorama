@@ -68,6 +68,10 @@
   - Sudah dicek: PDF satu halaman A4, gambar poster dilihat langsung, dan versi Indonesia tidak berubah (gambar PNG-nya identik dengan sebelumnya).
   - Belum dicek: scan QR dengan HP nyata dan hasil cetaknya.
 
+## 6 November 2026
+- Login sempat error 500 karena project Supabase (paket gratis) di-pause setelah sekitar seminggu tidak dipakai. Koneksi database ditolak dengan pesan `tenant/user ... not found`. Setelah Lutfi me-restore project, login kembali normal.
+- Atas permintaan Lutfi, semua data dikosongkan **kecuali akun petugas**: 281 kunjungan (274 dummy dan 7 data uji) dan 20 perusahaan dihapus. Tabel karyawan memang sudah kosong. Yang tersisa: 2 akun petugas dan catatan migrasi. Aplikasi siap dipakai dengan data asli.
+
 ### Langkah berikutnya
 - Lutfi mencoba di lokal dan meneruskan masukan atasan.
 - Deploy backend dan frontend ke Vercel.
